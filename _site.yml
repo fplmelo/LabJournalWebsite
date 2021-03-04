@@ -1,11 +1,19 @@
-name: "MyLabJournal"
+name: "Ecologia Numérica"
+output_dir: "docs"
+output:  
+  html_document:  
+    self_contained: no  
+    theme: flatly  
 navbar:
-  title: "MyLabJournal"
+  title: "Ecologia Numérica"
   left:
-    - text: "Home"
+    - text: "Início"
       href: index.html
-    - text: "Journal"
-      href: Journal.html
+    - text: "Exemplo"
+      href: exemplo.html
     - text: "Links"
       href: Links.html
-output_dir: "docs"
+    - text: "Aulas"
+      menu:
+      - text: "Bases de dados"
+      - href: base_dados.html
