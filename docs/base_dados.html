@@ -13,7 +13,7 @@
 
 <meta name="date" content="2021-03-03" />
 
-<title>base_dados</title>
+<title>Explorando bases de dados</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -30,26 +30,12 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<meta name="github-repo" content="gadenbuie/build-your-own-universe"/>
-<meta name="twitter:title" content="Build your own universe"/>
-<meta name="twitter:description" content="Scale high-quality research data provisioning with R packages. Presented at R/Medicine 2020."/>
-<meta name="twitter:url" content="https://build-your-own-universe.netlify.app"/>
-<meta name="twitter:image:src" content="https://build-your-own-universe.netlify.app/social-card.png"/>
-<meta name="twitter:image:alt" content="Title slide of Build your own universe: Scale high-quality research data provisioning with R packages, presented at R/Medicine 2020 by Travis Gerke and Garrick Aden-Buie"/>
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:creator" content="@grrrck"/>
-<meta name="twitter:site" content="@travisgerke"/>
-<meta property="og:title" content="Build your own universe"/>
-<meta property="og:description" content="Scale high-quality research data provisioning with R packages. Presented at R/Medicine 2020."/>
-<meta property="og:url" content="https://build-your-own-universe.netlify.app"/>
-<meta property="og:image" content="https://build-your-own-universe.netlify.app/social-card.png"/>
-<meta property="og:image:alt" content="Title slide of Build your own universe: Scale high-quality research data provisioning with R packages, presented at R/Medicine 2020 by Travis Gerke and Garrick Aden-Buie"/>
-<meta property="og:type" content="website"/>
-<meta property="og:locale" content="en_US"/>
-<meta property="article:author" content="Felipe Melo"/>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -236,6 +222,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -243,6 +292,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-sm-12 col-md-4 col-lg-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-sm-12 col-md-8 col-lg-9">
 
 
 
@@ -275,9 +334,18 @@ $(document).ready(function () {
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-header">Bases de dados</li>
     <li>
-      <a href="base_dados.html"></a>
+      <a href="base_dados.html">Aula 1</a>
+    </li>
+    <li>
+      <a href="page-b.html">Aula 2</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="page-c.html">Aula 3</a>
+    </li>
+    <li>
+      <a href="page-d.html">Aula 4</a>
     </li>
   </ul>
 </li>
@@ -293,7 +361,7 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">base_dados</h1>
+<h1 class="title toc-ignore">Explorando bases de dados</h1>
 <h4 class="author">Felipe Melo</h4>
 <h4 class="date">03/03/2021</h4>
 
@@ -304,28 +372,6 @@ $(document).ready(function () {
 <div id="bases-de-dados-ecológicos" class="section level1">
 <h1>Bases de dados ecológicos</h1>
 <p><em>Slides</em></p>
-<pre class="r"><code>library(metathis)
-meta() %&gt;%
-  meta_name(&quot;github-repo&quot; = &quot;gadenbuie/build-your-own-universe&quot;) %&gt;% 
-  meta_social(
-    title = &quot;Build your own universe&quot;,
-    description = paste(
-      &quot;Scale high-quality research data provisioning with R packages.&quot;,
-      &quot;Presented at R/Medicine 2020.&quot;
-    ),
-    url = &quot;https://build-your-own-universe.netlify.app&quot;,
-    image = &quot;https://build-your-own-universe.netlify.app/social-card.png&quot;,
-    image_alt = paste(
-      &quot;Title slide of Build your own universe:&quot;, 
-      &quot;Scale high-quality research data provisioning with R packages,&quot;, 
-      &quot;presented at R/Medicine 2020 by Travis Gerke and Garrick Aden-Buie&quot;
-    ),
-    og_type = &quot;website&quot;,
-    og_author = &quot;Felipe Melo&quot;,
-    twitter_card_type = &quot;summary_large_image&quot;,
-    twitter_creator = &quot;@grrrck&quot;,
-    twitter_site = &quot;@travisgerke&quot;
-  )</code></pre>
 <div id="exemplo-1-matriz-de-presencias-e-ausências" class="section level3">
 <h3>Exemplo 1 (matriz de presencias e ausências)</h3>
 <p>As bases de dados do R que serão usadas no nosso curso são reais e vêem de repositórios livres de dados e exemplos do próprio R para a área de ecologia. No entanto, para iniciar nossas atividades, vamos contruir uma base de dados fictícia apenas para entender sua estrutura.</p>
@@ -458,13 +504,12 @@ base1 # eis a nossa base agora com as espécies como nomes das linhas</code></pr
 library(ade4)</code></pre>
 <div id="livro-numerical-ecology-with-r" class="section level3">
 <h3>Livro: Numerical Ecology with R</h3>
-<p><img src="docs/base_dados_files/figure-html/livro.png" width="100%" /></p>
 <p>Vamos usar muitos exemplos desse livro durante a disciplina e para acostumar, vamos começar por tentar reproduzir os exercícios do capítulo 2: “Exploratpry Data Analysis”</p>
 </div>
 <div id="extraindo-dados" class="section level3">
 <h3>Extraindo dados</h3>
 <pre class="r"><code># Vamos carregar os dados que o livro usa como exemplo
-load(&quot;docs/base_dados_files/NEwR-2ed_code_data/NEwR2-Data/Doubs.RData&quot;)
+load(&quot;/home/felipe/Google Drive/github/eco_numerica/data/NEwR-2ed_code_data/NEwR2-Data/Doubs.RData&quot;)
 
 spe # matriz de abundância de espécies de peixes</code></pre>
 <pre><code>##    Cogo Satr Phph Babl Thth Teso Chna Pato Lele Sqce Baba Albi Gogo Eslu Pefl
@@ -600,6 +645,8 @@ spe # matriz de abundância de espécies de peixes</code></pre>
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -632,6 +679,32 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

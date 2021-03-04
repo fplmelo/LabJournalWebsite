@@ -23,7 +23,7 @@ Essa é a página da disciplina de Ecologia Numérica para o cursod e Bacharelad
 
 ## Como usar esse site e seus recursos
 
-1. Faça um "fork" do repositório abaixo no seu github e sig as instruções do arquivo README para criar seu próprio site. [https://github.com/CrumpLab/LabJournalWebsite](https://github.com/CrumpLab/LabJournalWebsite)
+1. Faça um "fork" do repositório abaixo no seu github e siga as instruções do arquivo README para criar seu próprio site. [https://github.com/CrumpLab/LabJournalWebsite](https://github.com/CrumpLab/LabJournalWebsite)
 
 2. Você vai editar **SEMPRE** o aqruivo Journal.Rmd. Dê uma sacada no link [Journal page](https://crumplab.github.io/LabJournalWebsite/Journal.html) para ver um exemplo de como começar a editar seu arquivo.
 
@@ -37,7 +37,7 @@ Essa é a página da disciplina de Ecologia Numérica para o cursod e Bacharelad
 
 ### [Ecologia Aplicada: O mundo segundo a ecologia](https://ecoaplic.org)
 
-<a href = "https://crumplab.github.io">
-![](images/logo.png)
+<a href = "https://ecoaplic.org">
+![](images/r-pca-heart_400.jpg)
 </a>
 </div>
