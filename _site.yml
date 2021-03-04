@@ -3,7 +3,7 @@ output_dir: "docs"
 output:  
   html_document:  
     self_contained: no  
-    theme: flatly  
+    theme: flatly
 navbar:
   title: "Ecologia Numérica"
   left:
@@ -15,5 +15,13 @@ navbar:
       href: Links.html
     - text: "Aulas"
       menu:
-      - text: "Bases de dados"
-      - href: base_dados.html
+        - text: "Aula 1"
+          href: base_dados.html
+        - text: "Aula 2"
+          href: page-b.html
+        - text: "---------"
+        - text: "Aula 3"
+          href: page-c.html
+        - text: "Aula 4"
+          href: page-d.html
+      

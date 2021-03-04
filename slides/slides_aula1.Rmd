@@ -47,7 +47,7 @@ tibble(
   - Por exemplo, essa é a estrutura dos dados ambientais que usaremos nesse módulo
 ### Estão no livro **Numerical Ecology with R**
 ```{r, echo=FALSE}
-load("/home/felipe/Google Drive/github/ecologia_numerica/00_aula1_basesdados/NEwR-2ed_code_data/NEwR2-Data/Doubs.RData")
+load("/home/felipe/Google Drive/github/eco_numerica/data/NEwR-2ed_code_data/NEwR2-Data/Doubs.RData")
 head(spe)
 ```
 

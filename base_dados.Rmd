@@ -1,8 +1,18 @@
 ---
-title: "base_dados"
+title: "Explorando bases de dados"
 author: "Felipe Melo"
 date: "03/03/2021"
-output: html_document
+output: 
+  html_document:
+    toc: true
+    toc_float:
+<<<<<<< HEAD
+      toc_collapsed: false
+      
+=======
+      toc_collapsed: true
+>>>>>>> 573853bd1a537339aed80d730618263f83b458e9
+
 ---
 ---
 
@@ -17,30 +27,13 @@ knitr::opts_chunk$set(echo = TRUE)
 # Bases de dados ecológicos
 
 *Slides* 
-
 ```{r}
-library(metathis)
-meta() %>%
-  meta_name("github-repo" = "gadenbuie/build-your-own-universe") %>% 
-  meta_social(
-    title = "Build your own universe",
-    description = paste(
-      "Scale high-quality research data provisioning with R packages.",
-      "Presented at R/Medicine 2020."
-    ),
-    url = "https://build-your-own-universe.netlify.app",
-    image = "https://build-your-own-universe.netlify.app/social-card.png",
-    image_alt = paste(
-      "Title slide of Build your own universe:", 
-      "Scale high-quality research data provisioning with R packages,", 
-      "presented at R/Medicine 2020 by Travis Gerke and Garrick Aden-Buie"
-    ),
-    og_type = "website",
-    og_author = "Felipe Melo",
-    twitter_card_type = "summary_large_image",
-    twitter_creator = "@grrrck",
-    twitter_site = "@travisgerke"
-  )
+
+<<<<<<< HEAD
+knitr::include_url("/eco_numerica/slides/slides_aula1.html")
+=======
+>>>>>>> 573853bd1a537339aed80d730618263f83b458e9
+
 ```
 
 
@@ -144,7 +137,11 @@ library(ade4)
 ### Livro: Numerical Ecology with R
 
 ```{r echo= FALSE, out.width = "100%"}
-include_graphics("docs/base_dados_files/figure-html/livro.png") 
+<<<<<<< HEAD
+include_graphics("images/livro.png") 
+=======
+#include_graphics("docs/base_dados_files/figure-html/livro.png") 
+>>>>>>> 573853bd1a537339aed80d730618263f83b458e9
 ```
 
 Vamos usar muitos exemplos desse livro durante a disciplina e para acostumar, vamos começar por tentar reproduzir os exercícios do capítulo 2: "Exploratpry Data Analysis"
@@ -154,7 +151,7 @@ Vamos usar muitos exemplos desse livro durante a disciplina e para acostumar, va
 ```{r}
 
 # Vamos carregar os dados que o livro usa como exemplo
-load("docs/base_dados_files/NEwR-2ed_code_data/NEwR2-Data/Doubs.RData")
+load("/home/felipe/Google Drive/github/eco_numerica/data/NEwR-2ed_code_data/NEwR2-Data/Doubs.RData")
 
 spe # matriz de abundância de espécies de peixes
 
