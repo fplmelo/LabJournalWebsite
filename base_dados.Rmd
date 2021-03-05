@@ -5,18 +5,11 @@ date: "03/03/2021"
 output: 
   html_document:
     toc: true
-    toc_float:
-<<<<<<< HEAD
-<<<<<<< HEAD
-      toc_collapsed: false
+    toc_float: true
+    collapsed: false
+    toc_depth: 3
+    #code_folding: hide
       
-=======
-      toc_collapsed: true
->>>>>>> 573853bd1a537339aed80d730618263f83b458e9
-=======
-      toc_collapsed: true
->>>>>>> 573853bd1a537339aed80d730618263f83b458e9
-
 ---
 ---
 
@@ -33,13 +26,6 @@ knitr::opts_chunk$set(echo = TRUE)
 *Slides* 
 ```{r}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-knitr::include_url("/eco_numerica/slides/slides_aula1.html")
-=======
->>>>>>> 573853bd1a537339aed80d730618263f83b458e9
-=======
->>>>>>> 573853bd1a537339aed80d730618263f83b458e9
 
 ```
 
@@ -144,15 +130,9 @@ library(ade4)
 ### Livro: Numerical Ecology with R
 
 ```{r echo= FALSE, out.width = "100%"}
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 include_graphics("images/livro.png") 
-=======
-#include_graphics("docs/base_dados_files/figure-html/livro.png") 
->>>>>>> 573853bd1a537339aed80d730618263f83b458e9
-=======
-#include_graphics("docs/base_dados_files/figure-html/livro.png") 
->>>>>>> 573853bd1a537339aed80d730618263f83b458e9
+
 ```
 
 Vamos usar muitos exemplos desse livro durante a disciplina e para acostumar, vamos começar por tentar reproduzir os exercícios do capítulo 2: "Exploratpry Data Analysis"
