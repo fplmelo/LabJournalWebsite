@@ -7,8 +7,12 @@ output:
     toc: true
     toc_float:
 <<<<<<< HEAD
+<<<<<<< HEAD
       toc_collapsed: false
       
+=======
+      toc_collapsed: true
+>>>>>>> 573853bd1a537339aed80d730618263f83b458e9
 =======
       toc_collapsed: true
 >>>>>>> 573853bd1a537339aed80d730618263f83b458e9
@@ -30,7 +34,10 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 knitr::include_url("/eco_numerica/slides/slides_aula1.html")
+=======
+>>>>>>> 573853bd1a537339aed80d730618263f83b458e9
 =======
 >>>>>>> 573853bd1a537339aed80d730618263f83b458e9
 
@@ -138,7 +145,11 @@ library(ade4)
 
 ```{r echo= FALSE, out.width = "100%"}
 <<<<<<< HEAD
+<<<<<<< HEAD
 include_graphics("images/livro.png") 
+=======
+#include_graphics("docs/base_dados_files/figure-html/livro.png") 
+>>>>>>> 573853bd1a537339aed80d730618263f83b458e9
 =======
 #include_graphics("docs/base_dados_files/figure-html/livro.png") 
 >>>>>>> 573853bd1a537339aed80d730618263f83b458e9
