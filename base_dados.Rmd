@@ -17,6 +17,9 @@ output:
 library(tidyverse)
 library(knitr)
 library(xaringan)
+library(xaringanExtra)
+xaringanExtra::use_share_again()
+xaringanExtra::style_share_again(share_buttons = c("twitter", "linkedin", "pocket"))
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
@@ -24,8 +27,9 @@ knitr::opts_chunk$set(echo = TRUE)
 # Bases de dados ecológicos
 
 *Slides* 
-```{r}
 
+```{r, echo=FALSE}
+xaringanExtra::embed_xaringan(url = "https://fplmelo.github.io/eco_numerica/slides/slides_aula1.html#1", ratio = "16:9")
 
 ```
 
