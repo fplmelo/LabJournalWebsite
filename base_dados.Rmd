@@ -93,7 +93,6 @@ Novamente crie a sua base de dados, modificando os parâmetros do código acima 
 ```{r exerc2, exercise = TRUE}
 
 ```
-## Extraindo informações básicas das matrizes
 
 ### Sumários
 
@@ -113,8 +112,9 @@ tibble(
 base1 # eis a nossa base agora com as espécies como nomes das linhas
 ```
 
-### Agora podemos começar a *namorar* os dados
+### Exercício 3
 
+Abaixo temos um exemplo de resumo básico dos dados.
 Um resumo geral da tabela com a função mais simples do R que mostra apenas alguns "momentos" da distribuição dos dados organizados por colunas, nesse caso, por sítio de estudo.
 
 ```{r, echo=TRUE}
@@ -122,14 +122,9 @@ summary(base1)
 
 ```
 
-Existem outras funções do pacote tidyverse que podem ser utilizadas com maior objetividade e para coisas específicas. Par aum curso introdutório completo de "tidyverse" veja essa maravilha aqui do Maurício Vancine [Introdução ao tidyverse](https://mauriciovancine.github.io/disciplina-analise-geoespacial-r/01_aulas/04_pres_intro_geocomp_r.html) 
+Existem outras funções do pacote tidyverse que podem ser utilizadas com maior objetividade e para manipulações específicas. Para um curso introdutório completo de "tidyverse" veja essa maravilha aqui do Maurício Vancine [Introdução ao tidyverse](https://mauriciovancine.github.io/disciplina-analise-geoespacial-r/01_aulas/04_pres_intro_geocomp_r.html) 
 
-## Pacotes para Ecologia Numérica
-
-```{r echo=TRUE, message=FALSE, warning=FALSE}
-library(vegan) # vegetation analysis: tem quase tudo que precisamos
-library(ade4)
-```
+## Agora podemos começar a *namorar* nosos dados
 
 ### Livro: Numerical Ecology with R
 
@@ -143,18 +138,45 @@ Vamos usar muitos exemplos desse livro durante a disciplina e para acostumar, va
 
 ### Extraindo dados
 
+*Para acessar os dados clique aqui (http://adn.biol.umontreal.ca/~numericalecology/numecolR/NEwR-2ed_code_data.zip)*
+
+Salve a pasta descompactada no diretório local correspondente ao seu repositório do _GitHub_
+
+No meu caso está assim
+
+```{r, echo=FALSE}
+include_graphics("images/pasta_data.png") 
+
+```
+
+
+Agora é só carregar as bases de dados usando o comando "load", lembrando de colocar o caminho para o arquivo segundo 
+
 ```{r}
 
 # Vamos carregar os dados que o livro usa como exemplo
 load("/home/felipe/Google Drive/github/eco_numerica/data/NEwR-2ed_code_data/NEwR2-Data/Doubs.RData")
+```
 
+
+```{r}
 spe # matriz de abundância de espécies de peixes
-
 spa # matriz espacial
-
 env # matriz ambiental
 ```
 
-*Para acessar os dados clique aqui (http://adn.biol.umontreal.ca/~numericalecology/numecolR/NEwR-2ed_code_data.zip)*
+### Exercício 4
+
+Usando essas bases de dados, tente reproduzir alguns dos gráficos que estão nos slides, pelo menos dois.
+
+### Exercício 5
+
+Agora, crie suas próprias perguntas e explore os dados. Lembre-se, são dados de uma comunidade de peixes amostradas em 30 localidades de um rio qualquer. Temos tanto a localização geográfica dessas amostras quanto as características ambientais do rio nessas localidades.
+
+Exemplo de perguntas:
+
+- Onde há mais riqueza de peixes?
+- Onde há mais abundância de peixes?
+- Quais espécies occorrem mais na nascente?
 
 

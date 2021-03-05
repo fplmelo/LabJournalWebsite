@@ -457,8 +457,6 @@ tibble(
 <li>Abundâncias devem variar entre 0-20 em 5 localidades e entre 0-50 em outras 5 localidades</li>
 </ol>
 </div>
-<div id="extraindo-informações-básicas-das-matrizes" class="section level2">
-<h2>Extraindo informações básicas das matrizes</h2>
 <div id="sumários" class="section level3">
 <h3>Sumários</h3>
 <p>Qualquer análise de dados em ecologia começa com uma boa chacagem dos seu dados. Precisamos saber como se comportam os dados e para isso podemo começar com algumas funções simples como ‘summary’ (pactote base do R) ou ‘summarize’ (pacote tidyverse). Para isso, vamos pegar a matriz gerada com as abundâncias e dar a ela um nome, tranformando-a assim num objeto.</p>
@@ -487,9 +485,9 @@ base1 # eis a nossa base agora com as espécies como nomes das linhas</code></pr
 ##  9 sp9       2     9     3     8
 ## 10 sp10      6     6     7    12</code></pre>
 </div>
-<div id="agora-podemos-começar-a-namorar-os-dados" class="section level3">
-<h3>Agora podemos começar a <em>namorar</em> os dados</h3>
-<p>Um resumo geral da tabela com a função mais simples do R que mostra apenas alguns “momentos” da distribuição dos dados organizados por colunas, nesse caso, por sítio de estudo.</p>
+<div id="exercício-3" class="section level3">
+<h3>Exercício 3</h3>
+<p>Abaixo temos um exemplo de resumo básico dos dados. Um resumo geral da tabela com a função mais simples do R que mostra apenas alguns “momentos” da distribuição dos dados organizados por colunas, nesse caso, por sítio de estudo.</p>
 <pre class="r"><code>summary(base1)</code></pre>
 <pre><code>##      spec               siteA           siteB          siteC      
 ##  Length:10          Min.   : 0.00   Min.   :0.00   Min.   : 3.00  
@@ -505,13 +503,10 @@ base1 # eis a nossa base agora com as espécies como nomes das linhas</code></pr
 ##  Mean   :10.90  
 ##  3rd Qu.:15.75  
 ##  Max.   :18.00</code></pre>
-<p>Existem outras funções do pacote tidyverse que podem ser utilizadas com maior objetividade e para coisas específicas. Par aum curso introdutório completo de “tidyverse” veja essa maravilha aqui do Maurício Vancine <a href="https://mauriciovancine.github.io/disciplina-analise-geoespacial-r/01_aulas/04_pres_intro_geocomp_r.html">Introdução ao tidyverse</a></p>
+<p>Existem outras funções do pacote tidyverse que podem ser utilizadas com maior objetividade e para manipulações específicas. Para um curso introdutório completo de “tidyverse” veja essa maravilha aqui do Maurício Vancine <a href="https://mauriciovancine.github.io/disciplina-analise-geoespacial-r/01_aulas/04_pres_intro_geocomp_r.html">Introdução ao tidyverse</a></p>
 </div>
-</div>
-<div id="pacotes-para-ecologia-numérica" class="section level2">
-<h2>Pacotes para Ecologia Numérica</h2>
-<pre class="r"><code>library(vegan) # vegetation analysis: tem quase tudo que precisamos
-library(ade4)</code></pre>
+<div id="agora-podemos-começar-a-namorar-nosos-dados" class="section level2">
+<h2>Agora podemos começar a <em>namorar</em> nosos dados</h2>
 <div id="livro-numerical-ecology-with-r" class="section level3">
 <h3>Livro: Numerical Ecology with R</h3>
 <p><img src="images/livro.png" width="100%" /></p>
@@ -519,10 +514,14 @@ library(ade4)</code></pre>
 </div>
 <div id="extraindo-dados" class="section level3">
 <h3>Extraindo dados</h3>
+<p><em>Para acessar os dados clique aqui (<a href="http://adn.biol.umontreal.ca/~numericalecology/numecolR/NEwR-2ed_code_data.zip" class="uri">http://adn.biol.umontreal.ca/~numericalecology/numecolR/NEwR-2ed_code_data.zip</a>)</em></p>
+<p>Salve a pasta descompactada no diretório local correspondente ao seu repositório do <em>GitHub</em></p>
+<p>No meu caso está assim</p>
+<p><img src="images/pasta_data.png" width="480" /></p>
+<p>Agora é só carregar as bases de dados usando o comando “load”, lembrando de colocar o caminho para o arquivo segundo</p>
 <pre class="r"><code># Vamos carregar os dados que o livro usa como exemplo
-load(&quot;/home/felipe/Google Drive/github/eco_numerica/data/NEwR-2ed_code_data/NEwR2-Data/Doubs.RData&quot;)
-
-spe # matriz de abundância de espécies de peixes</code></pre>
+load(&quot;/home/felipe/Google Drive/github/eco_numerica/data/NEwR-2ed_code_data/NEwR2-Data/Doubs.RData&quot;)</code></pre>
+<pre class="r"><code>spe # matriz de abundância de espécies de peixes</code></pre>
 <pre><code>##    Cogo Satr Phph Babl Thth Teso Chna Pato Lele Sqce Baba Albi Gogo Eslu Pefl
 ## 1     0    3    0    0    0    0    0    0    0    0    0    0    0    0    0
 ## 2     0    5    4    3    0    0    0    0    0    0    0    0    0    0    0
@@ -649,7 +648,20 @@ spe # matriz de abundância de espécies de peixes</code></pre>
 ## 28 394.7 195  0.3 43.20 8.3 100 0.74 4.00 0.30  8.1  4.5
 ## 29 422.0 183  0.6 67.70 7.8 110 0.45 1.62 0.10  9.0  4.2
 ## 30 453.0 172  0.2 69.00 8.2 109 0.65 1.60 0.10  8.2  4.4</code></pre>
-<p><em>Para acessar os dados clique aqui (<a href="http://adn.biol.umontreal.ca/~numericalecology/numecolR/NEwR-2ed_code_data.zip" class="uri">http://adn.biol.umontreal.ca/~numericalecology/numecolR/NEwR-2ed_code_data.zip</a>)</em></p>
+</div>
+<div id="exercício-4" class="section level3">
+<h3>Exercício 4</h3>
+<p>Usando essas bases de dados, tente reproduzir alguns dos gráficos que estão nos slides, pelo menos dois.</p>
+</div>
+<div id="exercício-5" class="section level3">
+<h3>Exercício 5</h3>
+<p>Agora, crie suas próprias perguntas e explore os dados. Lembre-se, são dados de uma comunidade de peixes amostradas em 30 localidades de um rio qualquer. Temos tanto a localização geográfica dessas amostras quanto as características ambientais do rio nessas localidades.</p>
+<p>Exemplo de perguntas:</p>
+<ul>
+<li>Onde há mais riqueza de peixes?</li>
+<li>Onde há mais abundância de peixes?</li>
+<li>Quais espécies occorrem mais na nascente?</li>
+</ul>
 </div>
 </div>
 </div>

@@ -21,108 +21,50 @@ Esse é um arquivo ".Rmd". Ele é o arquivo base do Rmarkdown e consegue mistura
 
 # Aula 1
 
-2018 | 7 | 23 Last compiled: `r Sys.Date()`
 
-Notice that whatever you define as a top level header, automatically gets put into the table of contents bar on the left. 
+usando uma hashtag, esse nível é automaticamente adicionado ao menu lateral
 
 ## Second level header
 
-You can add more headers by adding more hashtags. These won't be put into the table of contents
+Já o segundo nível, nesse caso, não vai entrar
 
 ### third level header
 
-Here's an even lower level header
+Tamposuco esse nível
 
-# My second post (note the order)
+# Aula 2
 
-2018 | 7 | 23 Last compiled: `r Sys.Date()`
+Note que aqui, sempre que adicionar algo, vem para baixo. Se você quer que as últimas postagens venham para cima, comece em cima, mas atenção ao cabeçalho para que as pessoas entendam a ordem
 
-I'm writing this tutorial going from the top down. And, this is how it will be printed. So, notice the second post is second in the list. If you want your most recent post to be at the top, then make a new post starting at the top. If you want the oldest first, do, then keep adding to the bottom
+# Adicionando código R
 
-# Adding R stuff
+Essa é a grande vantagem do RMarkdown. Você pode escrever texto e código ao mesmo tempo. Texto é assim, simples e direto. Já os códigod precisam ser inseridos num espaço que você cria com o comando **crtl+alt+i**. Veja exemplo
 
-So far this is just a blog where you can write in plain text and serve your writing to a webpage. One of the main purposes of this lab journal is to record your progress learning R. The reason I am asking you to use this process is because you can both make a website, and a lab journal, and learn R all in R-studio. This makes everything really convenient and in the sam place. 
-
-So, let's say you are learning how to make a histogram in R. For example, maybe you want to sample 100 numbers from a normal distribution with mean = 0, and standard deviation =1, and then you want to plot a histogram. You can do this right here by using an r code block, like this:
+Quero um vetor de 100 número de distribuição normal, com média zero e desvio padrão 1. Após isso, ainda quero um histograma para checar se a distribuição tá mesmo parecida com uma curva normal
 
 ```{r}
 samples <- rnorm(100, mean=0, sd=1)
 hist(samples)
 ```
 
-When you knit this R Markdown document, you will see that the histogram is printed to the page, along with the R code. This document can be set up to hide the R code in the webpage, just delete the comment (hashtag), from the cold folding option in the yaml header up top. For purposes of letting yourself see the code, and me see the code, best to keep it the way that it is. You learn all of these things and more can be customized in each R code block.
+Note que aqui temos o resultado e os códigos, tudo aparece. Mas voce pode controlar se quer que apareçam códigos apenas, resultados apenas ou os dois.
 
-# The big idea
+# Como isso vai fucnionar na disciplina?
 
-Use this lab journal to record what you do in R. This way I will be able to see what you are doing and help you along the way. You will also be creating a repository of all the things you do. You can make posts about everything. Learning specific things in R (project unrelated), and doing things for the project that we will discuss at the beginning of the Fall semester. You can get started now by fiddling around with googling things, and trying stuff out in R. I've placed some helpful starting links in the links page on this website
+Use esse arquivo para organizar o que você faz nessa disciplina, você vai aprender a compartilhar e publicar seus relatórios e eu, como professor, poderei acompanhar seu desenvolvimento e fazer sua avaliação. Aliás, você pode usar isso como quiser, compartilhar o que aprender com os demais e comigo, que também estou aprendendo. 
+**Vai ser massa!!**
 
-# What can you do right now by yourself?
+<img src="https://media.giphy.com/media/yoJC2GnSClbPOkV0eA/giphy.gif" />
 
-It's hard to learn programming when you don't have specific problems that you are trying to solve. Everything just seems abstract.
+# Comece já, vai demorar um pouco mas todos vão aprender
+
+Esses links aqui embaixo são do mesmo cara que criou o templete que estamos usando
 
 I wrote an [introductory programming book that introduces R](https://crumplab.github.io/programmingforpsych/), and gives some [concrete problems for you to solve](https://crumplab.github.io/programmingforpsych/programming-challenges-i-learning-the-fundamentals.html). 
 
 To get the hang of journaling and solving the problems to learn programming, my suggestion is that you use this .Rmd file to solve the problems. It would look like this:
 
-# Problem 1
+# Bora passar raiva?
 
-Do simple math with numbers, addition, subtraction, multiplication, division
+<img src= "https://media.giphy.com/media/26BRL3pw98MWNOy0U/giphy.gif" />
 
-```{r}
-1+2
-2*5
-5/3
-(1+6+4)/5
-
-```
-
-# Problem 2
-
-Put numbers into variables, do simple math on the variables
-
-```{r}
-a<-1
-b<-2
-a+b
-
-d<-c(1,2,3)
-e<-c(5,6,7)
-d+e
-d*e
-d/e
-
-```
-
-# Problem 3
-
-Write code that will place the numbers 1 to 100 separately into a variable using for loop. Then, again using the seq function.
-
-```{r}
-# for loop solution
-# i becomes the number 1 to 100 at each step of the loop
-
-
-a <- length(100) # make empty variable, set length to 100
-for (i in 1:100){
-  a[i] <-i #assigns the number in i, to the ith index of a
-}
-
-print(a)
-
-# for loop solution #2
-
-a<-c() #create empty variable using combine command
-for (i in 1:100){
-  a<-c(a,i) # keeps combining a with itself and the new number in i
-}
-print(a)
-
-# seq solution
-a <- seq(1,100,1) # look up help for seq using ?seq() in console
-print(a)
-
-```
-
-# Replace this with problem 4
-
-And keep going. Try to solve the problems with different scripts that provide the same solution. Good luck, Happy coding.
