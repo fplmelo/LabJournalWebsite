@@ -1,0 +1,70 @@
+---
+title: "Ecologia Numérica"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    collapsed: false
+    number_sections: false
+    toc_depth: 1
+    #code_folding: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message=FALSE,warning=FALSE, cache=TRUE)
+```
+
+IMPORTANTE: Você pode simplesmente deletar tudo que está aqui nesse documento. A ideia é que você comece a editá-lo do começo e criar todo seu histórico de exercícios e conteúdo da disciplina.
+
+
+Esse é um arquivo ".Rmd". Ele é o arquivo base do Rmarkdown e consegue misturar linguagens diferentes como HTML, R, CSS e outras. Há inúmeros guias e tutoriais sobre como manejar o RMarkdwonw para criar todo tipo de produtos, desde sires até mesmo artigos completos e apresentações.
+
+# Aula 1
+
+
+usando uma hashtag, esse nível é automaticamente adicionado ao menu lateral
+
+## Second level header
+
+Já o segundo nível, nesse caso, não vai entrar
+
+### third level header
+
+Tamposuco esse nível
+
+# Aula 2
+
+Note que aqui, sempre que adicionar algo, vem para baixo. Se você quer que as últimas postagens venham para cima, comece em cima, mas atenção ao cabeçalho para que as pessoas entendam a ordem
+
+# Adicionando código R
+
+Essa é a grande vantagem do RMarkdown. Você pode escrever texto e código ao mesmo tempo. Texto é assim, simples e direto. Já os códigod precisam ser inseridos num espaço que você cria com o comando **crtl+alt+i**. Veja exemplo
+
+Quero um vetor de 100 número de distribuição normal, com média zero e desvio padrão 1. Após isso, ainda quero um histograma para checar se a distribuição tá mesmo parecida com uma curva normal
+
+```{r}
+samples <- rnorm(100, mean=0, sd=1)
+hist(samples)
+```
+
+Note que aqui temos o resultado e os códigos, tudo aparece. Mas voce pode controlar se quer que apareçam códigos apenas, resultados apenas ou os dois.
+
+# Como isso vai fucnionar na disciplina?
+
+Use esse arquivo para organizar o que você faz nessa disciplina, você vai aprender a compartilhar e publicar seus relatórios e eu, como professor, poderei acompanhar seu desenvolvimento e fazer sua avaliação. Aliás, você pode usar isso como quiser, compartilhar o que aprender com os demais e comigo, que também estou aprendendo. 
+**Vai ser massa!!**
+
+<img src="https://media.giphy.com/media/yoJC2GnSClbPOkV0eA/giphy.gif" />
+
+# Comece já, vai demorar um pouco mas todos vão aprender
+
+Esses links aqui embaixo são do mesmo cara que criou o templete que estamos usando
+
+I wrote an [introductory programming book that introduces R](https://crumplab.github.io/programmingforpsych/), and gives some [concrete problems for you to solve](https://crumplab.github.io/programmingforpsych/programming-challenges-i-learning-the-fundamentals.html). 
+
+To get the hang of journaling and solving the problems to learn programming, my suggestion is that you use this .Rmd file to solve the problems. It would look like this:
+
+# Bora passar raiva?
+
+<img src= "https://media.giphy.com/media/26BRL3pw98MWNOy0U/giphy.gif" />
+

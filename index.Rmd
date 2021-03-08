@@ -19,7 +19,7 @@ output: html_document
 
 # **Ecologia Numérica**
 
-Essa é a página da disciplina de Ecologia Numérica para o cursod e Bacharelado em Ciências Biológicas da UFPE. Aqui vocÊ vai encontrar todo o material didático necessário para acompanhar o conteúdo, principalmente os slides, exercícios e aulas gravadas.
+Essa é a página da disciplina de Ecologia Numérica para o curso de Bacharelado em Ciências Biológicas da UFPE. Aqui vocÊ vai encontrar todo o material didático necessário para acompanhar o conteúdo, principalmente os slides, exercícios e aulas gravadas.
 
 ## Como usar esse site e seus recursos
 
