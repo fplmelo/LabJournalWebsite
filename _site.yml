@@ -17,9 +17,9 @@ navbar:
       menu:
         - text: "Ementa"
           href: plano_ensino.html
-        - text: "Aula 1"
+        - text: "bases de dados"
           href: base_dados.html
-        - text: "Aula 2"
+        - text: "Medidas de Associação"
           href: med_assoc.html
         - text: "---------"
         - text: "Aula 3"

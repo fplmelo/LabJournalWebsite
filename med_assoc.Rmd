@@ -51,6 +51,8 @@ Nesse caso até um gráfico pode nos ajudar a ter uma dimensão da importância 
 ```{r}
 image(as.matrix(spe_na))
 ```
+
+
 Os valores em branco são os NAs e as cores indicam as abundâncias, sendo quanto mais vermelho, mais abundante.
 
 
