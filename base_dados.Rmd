@@ -29,7 +29,7 @@ knitr::opts_chunk$set(echo = TRUE)
 *Slides* 
 
 ```{r, echo=FALSE}
-xaringanExtra::embed_xaringan(url = "https://fplmelo.github.io/eco_numerica/docs/slides/slides_aula1.html#1", ratio = "16:9")
+xaringanExtra::embed_xaringan(url = "https://fplmelo.github.io/eco_numerica/slides/slides_aula1.html#1", ratio = "16:9")
 
 ```
 
