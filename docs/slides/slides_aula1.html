@@ -9,6 +9,15 @@
     <link href="slides_aula1_files/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
     <link href="slides_aula1_files/tile-view-0.2.6/tile-view.css" rel="stylesheet" />
     <script src="slides_aula1_files/tile-view-0.2.6/tile-view.js"></script>
+    <script src="slides_aula1_files/clipboard-2.0.6/clipboard.min.js"></script>
+    <link href="slides_aula1_files/shareon-1.4.1/shareon.min.css" rel="stylesheet" />
+    <script src="slides_aula1_files/shareon-1.4.1/shareon.min.js"></script>
+    <link href="slides_aula1_files/xaringanExtra-shareagain-0.2.6/shareagain.css" rel="stylesheet" />
+    <script src="slides_aula1_files/xaringanExtra-shareagain-0.2.6/shareagain.js"></script>
+    <script src="slides_aula1_files/fabric-4.3.1/fabric.min.js"></script>
+    <link href="slides_aula1_files/xaringanExtra-scribble-0.0.1/scribble.css" rel="stylesheet" />
+    <script src="slides_aula1_files/xaringanExtra-scribble-0.0.1/scribble.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', function() { window.xeScribble = new Scribble({"pen_color":["#FF0000"],"pen_size":3,"eraser_size":30}) })</script>
   </head>
   <body>
     <textarea id="source">
@@ -54,20 +63,20 @@ class: center, middle, inverse, title-slide
 ### Estão no livro **Numerical Ecology with R**
 
 ```
-##   Cogo Satr Phph Babl Thth Teso Chna Pato Lele Sqce Baba Albi Gogo Eslu Pefl
-## 1    0    3    0    0    0    0    0    0    0    0    0    0    0    0    0
-## 2    0    5    4    3    0    0    0    0    0    0    0    0    0    0    0
-## 3    0    5    5    5    0    0    0    0    0    0    0    0    0    1    0
-## 4    0    4    5    5    0    0    0    0    0    1    0    0    1    2    2
-## 5    0    2    3    2    0    0    0    0    5    2    0    0    2    4    4
-## 6    0    3    4    5    0    0    0    0    1    2    0    0    1    1    1
-##   Rham Legi Scer Cyca Titi Abbr Icme Gyce Ruru Blbj Alal Anan
-## 1    0    0    0    0    0    0    0    0    0    0    0    0
-## 2    0    0    0    0    0    0    0    0    0    0    0    0
-## 3    0    0    0    0    0    0    0    0    0    0    0    0
-## 4    0    0    0    0    1    0    0    0    0    0    0    0
-## 5    0    0    2    0    3    0    0    0    5    0    0    0
-## 6    0    0    0    0    2    0    0    0    1    0    0    0
+##   Cogo Satr Phph Babl Thth Teso Chna Pato Lele Sqce Baba Albi Gogo Eslu Pefl Rham Legi Scer Cyca Titi Abbr Icme Gyce Ruru Blbj
+## 1    0    3    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 2    0    5    4    3    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 3    0    5    5    5    0    0    0    0    0    0    0    0    0    1    0    0    0    0    0    0    0    0    0    0    0
+## 4    0    4    5    5    0    0    0    0    0    1    0    0    1    2    2    0    0    0    0    1    0    0    0    0    0
+## 5    0    2    3    2    0    0    0    0    5    2    0    0    2    4    4    0    0    2    0    3    0    0    0    5    0
+## 6    0    3    4    5    0    0    0    0    1    2    0    0    1    1    1    0    0    0    0    2    0    0    0    1    0
+##   Alal Anan
+## 1    0    0
+## 2    0    0
+## 3    0    0
+## 4    0    0
+## 5    0    0
+## 6    0    0
 ```
 
 ---
@@ -134,9 +143,8 @@ colnames(spe) # aqui até os nomes abravidaos das espécies nós temos
 ```
 
 ```
-##  [1] "Cogo" "Satr" "Phph" "Babl" "Thth" "Teso" "Chna" "Pato" "Lele" "Sqce"
-## [11] "Baba" "Albi" "Gogo" "Eslu" "Pefl" "Rham" "Legi" "Scer" "Cyca" "Titi"
-## [21] "Abbr" "Icme" "Gyce" "Ruru" "Blbj" "Alal" "Anan"
+##  [1] "Cogo" "Satr" "Phph" "Babl" "Thth" "Teso" "Chna" "Pato" "Lele" "Sqce" "Baba" "Albi" "Gogo" "Eslu" "Pefl" "Rham" "Legi"
+## [18] "Scer" "Cyca" "Titi" "Abbr" "Icme" "Gyce" "Ruru" "Blbj" "Alal" "Anan"
 ```
 
 ---
@@ -209,6 +217,16 @@ colnames(spe) # aqui até os nomes abravidaos das espécies nós temos
 &lt;img src="slides_aula1_files/figure-html/unnamed-chunk-12-1.png" width="400px" /&gt;
 - Simpson parace menos sensível
 ]
+---
+# A importância de explorar os dados
+
+&lt;img src="/home/felipe/Google Drive/github/eco_numerica/images/din_eco.png" width="100%" /&gt;
+
+
+[Porque explorar dados?](https://dynamicecology.wordpress.com/2013/10/16/in-praise-of-exploratory-statistics/)
+
+
+
 ---
 # Faça exercícios, sempre utilizando pergutnas originais
 .pull-left[

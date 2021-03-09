@@ -25,6 +25,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r xaringan-tile-view, echo=FALSE}
 xaringanExtra::use_tile_view()
+xaringanExtra::use_share_again()
+xaringanExtra::use_scribble()
 ```
 
 # Explorando dados 
@@ -237,6 +239,18 @@ ggplot(spa, aes(X,Y))+
 ```
 - Simpson parace menos sensível
 ]
+---
+# A importância de explorar os dados
+
+```{r echo= FALSE, out.width = "100%"}
+knitr::include_graphics("/home/felipe/Google Drive/github/eco_numerica/images/din_eco.png")
+```
+
+
+[Porque explorar dados?](https://dynamicecology.wordpress.com/2013/10/16/in-praise-of-exploratory-statistics/)
+
+
+
 ---
 # Faça exercícios, sempre utilizando pergutnas originais
 .pull-left[
