@@ -31,7 +31,7 @@ xaringanExtra::use_scribble()
 
 # Explorando dados 
 - Bases de dados ecológicos seguem uma lógica relativamente simples
-  - As bases são organizadas quse sempre na forma de matrizes com 'n' colunas e 'm' linhas
+  - As bases são organizadas quse sempre na forma de matrizes com 'n' colunas e 'p' linhas
 ```{r base_ficticia, echo=F}
 set.seed(999) # vai gerar sempre o mesmo resultado com as funções abaixo
 tibble(

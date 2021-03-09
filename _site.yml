@@ -20,7 +20,7 @@ navbar:
         - text: "Aula 1"
           href: base_dados.html
         - text: "Aula 2"
-          href: page-b.html
+          href: med_assoc.html
         - text: "---------"
         - text: "Aula 3"
           href: page-c.html

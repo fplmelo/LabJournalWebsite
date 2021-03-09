@@ -1,0 +1,56 @@
+---
+title: "Medidas de Associação"
+author: "Felipe Melo"
+date: "03/03/2021"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    collapsed: false
+    toc_depth: 3
+    #code_folding: hide
+      
+---
+```{r setup, include=FALSE}
+library(tidyverse)
+library(knitr)
+library(xaringan)
+library(xaringanExtra)
+xaringanExtra::style_share_again(share_buttons = c("twitter", "linkedin", "pocket"))
+knitr::opts_chunk$set(echo = TRUE)
+```
+---
+
+# Medidas de associação
+
+Na ecologia usamos muitas medidas que fazem uma _ligação_ entre pares de dados. Esses _pares de dados_ podem ser espécies, ou locais de coleta. Há uma enorme variedade de métricas que vão nos oferecer uma medida de associação entre pares. Essas medidas são reportadas na forma de índices ou métricas que têm naturezas distintas, mas todas tem a particularidade de gerar uma matriz quadrada e simétrica de dimensões _n x n_ quando se comparam objetos ou _p x p_ quando se comparam variáveis (as letras são conveções). Essas matrizes de assossiação serão criadas e facilmente pelas análises, mas o pesquisador aqui tem um papel fundamental: **escolher as métricas**
+
+## Q mode & R mode
+
+_Como de constume, vamos seguir nessa disciplina o roteiro proposto pelo livro texto [**Numerical Ecology with R**](http://jinliangliu.weebly.com/uploads/2/5/7/8/25781074/numerical_ecology_with_r.pdf)._
+
+### O problema dos zeros
+
+Todas as matrizes de dados ecológicos costumam ter zeros. Esses podem ser naturais (observações) ou simplesmente ausências de dados. Mas precisamos ter ideia de quão importantes são os zeros.
+
+Uma boa maneira é checar se há zeros provenientes de valores vazios ou **NA**
+```{r  include=TRUE}
+load("/home/felipe/Google Drive/github/eco_numerica/data/NEwR-2ed_code_data/NEwR2-Data/Doubs.RData")
+
+head(is.na(spe))
+```
+
+Se os dados fossem realmente NAs então teríamos uma matriz um pouco diferente...
+```{r include=TRUE}
+spe_na <- replace(spe, spe == 0, NA) # Mudei zeros por NAs
+head(is.na(spe_na))
+
+```
+Nesse caso até um gráfico pode nos ajudar a ter uma dimensão da importância dos zeros NAs
+
+```{r}
+image(as.matrix(spe_na))
+```
+Os valores em branco são os NAs e as cores indicam as abundâncias, sendo quanto mais vermelho, mais abundante.
+
+

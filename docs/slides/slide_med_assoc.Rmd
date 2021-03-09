@@ -1,0 +1,45 @@
+---
+title: "Ecologia Numérica"
+subtitle: "Aula 2 - Medidas de Associação"
+author: "Felipe Melo"
+institute: "Laboratório de Ecologia Aplicada - UFPE"
+date: "`r Sys.Date()`"
+encoding: "UTF-8"
+output: 
+  xaringan::moon_reader:
+    libs_dir: libs
+  css: ["shinobi","tamu-fonts"]
+  nature:
+   highlightStyle: github
+   highlightLines: true
+   countIncrementalSlides: false
+   ratio: '16:9'
+
+---
+```{r setup, include=FALSE}
+library(tidyverse)
+library(knitr)
+knitr::opts_chunk$set(echo = TRUE)
+
+```
+
+```{r xaringan-tile-view, echo=FALSE}
+xaringanExtra::use_tile_view()
+xaringanExtra::use_share_again()
+xaringanExtra::use_scribble()
+```
+
+# Medidas de associação
+
+Precisamos 
+
+
+
+
+
+
+
+
+
+
+
