@@ -29,7 +29,7 @@ knitr::opts_chunk$set(echo = TRUE)
 *Slides* 
 
 ```{r, echo=FALSE}
-xaringanExtra::embed_xaringan(url = "https://fplmelo.github.io/eco_numerica/slides/slides_aula1.html#1", ratio = "16:9")
+xaringanExtra::embed_xaringan(url = "https://github.com/fplmelo/eco_numerica/blob/docs/slides/slides_aula1.html", ratio = "16:9")
 
 ```
 
@@ -169,14 +169,18 @@ env # matriz ambiental
 
 Usando essas bases de dados, tente reproduzir alguns dos gráficos que estão nos slides, pelo menos dois.
 
+Os scripts originais do livro estão neste repositório. O Script específico deste capítulo de análise excploratória de dados pode ser acessado por este [link](https://github.com/fplmelo/eco_numerica/blob/master/docs/data/NEwR-2ed_code_data/NEwR2-Scripts/chap2.R). Mas, sugiro que você baixe os scripts e os organize nas suas patas locais.
+
 ### Exercício 5
 
-Agora, crie suas próprias perguntas e explore os dados. Lembre-se, são dados de uma comunidade de peixes amostradas em 30 localidades de um rio qualquer. Temos tanto a localização geográfica dessas amostras quanto as características ambientais do rio nessas localidades.
+Agora, crie suas próprias perguntas e explore os dados. Lembre-se, são dados de uma comunidade de peixes amostradas em 30 localidades de um rio na Suiça Temos tanto a localização geográfica dessas amostras quanto as características ambientais do rio nessas localidades.
 
 Exemplo de perguntas:
 
 - Onde há mais riqueza de peixes?
 - Onde há mais abundância de peixes?
 - Quais espécies occorrem mais na nascente?
+
+
 
 
