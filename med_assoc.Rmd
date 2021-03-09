@@ -48,10 +48,9 @@ head(is.na(spe_na))
 ```
 Nesse caso até um gráfico pode nos ajudar a ter uma dimensão da importância dos zeros NAs
 
-```{r}
+```{r,  out.width="600px"}
 image(as.matrix(spe_na))
 ```
-
 
 Os valores em branco são os NAs e as cores indicam as abundâncias, sendo quanto mais vermelho, mais abundante.
 
