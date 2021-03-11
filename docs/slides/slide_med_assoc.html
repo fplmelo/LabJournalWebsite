@@ -4,7 +4,7 @@
     <title>Ecologia Numérica</title>
     <meta charset="utf-8" />
     <meta name="author" content="Felipe Melo" />
-    <meta name="date" content="2021-03-09" />
+    <meta name="date" content="2021-03-12" />
     <script src="slide_med_assoc_files/header-attrs-2.6/header-attrs.js"></script>
     <link href="slide_med_assoc_files/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="slide_med_assoc_files/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
@@ -19,6 +19,9 @@
     <link href="slide_med_assoc_files/xaringanExtra-scribble-0.0.1/scribble.css" rel="stylesheet" />
     <script src="slide_med_assoc_files/xaringanExtra-scribble-0.0.1/scribble.js"></script>
     <script>document.addEventListener('DOMContentLoaded', function() { window.xeScribble = new Scribble({"pen_color":["#FF0000"],"pen_size":3,"eraser_size":30}) })</script>
+    <script src="slide_med_assoc_files/xaringanExtra_fit-screen-0.2.6/fit-screen.js"></script>
+    <link href="slide_med_assoc_files/panelset-0.2.6/panelset.css" rel="stylesheet" />
+    <script src="slide_med_assoc_files/panelset-0.2.6/panelset.js"></script>
   </head>
   <body>
     <textarea id="source">
@@ -28,7 +31,7 @@ class: center, middle, inverse, title-slide
 ## Aula 2 - Medidas de Associação
 ### Felipe Melo
 ### Laboratório de Ecologia Aplicada - UFPE
-### 2021-03-09
+### 2021-03-12
 
 ---
 
@@ -36,20 +39,130 @@ class: center, middle, inverse, title-slide
 
 
 
-# Medidas de associação
+# Similaridade ecológica
 
-Precisamos 
+Hoje precisamos aprender a explicar isso
+
+&lt;img src="https://bigdata-madesimple.com/wp-content/uploads/2015/06/Five-most-popular-similarity-measures-implementation-in-python-1.png
+" width="600" height="420" /&gt;
+---
+# O que é similaridade ecológica?
+.pull-left[
+- A definição ecológica é simples: Quão parecidas são espécies/comunidades/indivíduos
+
+- A definição matemática
+   X = Y, então similaridade = 1
+   X ≠ Y, então similaridade = 0
+   
+- Portanto, similaridade é quando dois objetos são iguais
+]
+.pull-right[
+
+&lt;img src="https://i.pinimg.com/originals/14/3f/80/143f800e036e71dd0dfe04c1451c7087.jpg" /&gt;
+
+]
+
+--
+# Mas como medir essa similaridade?
+---
+.pull-left[
+# Indices de similaridade
+
+- Variam de 0-1
+ - Dados qualitativos 
+ - Dados quantitativos
+- Ignoram **duplos zeros** (vamos abordar isso)
+&lt;img src="https://i.ytimg.com/vi/Ah_4xqvS1WU/maxresdefault.jpg" /&gt;
+&lt;img src="https://miro.medium.com/max/562/1*-pA7yjdXoLepVh3nB-LC4g.png" height= 200 /&gt;
+]
+--
+
+.pull-right[
+# Medidas de distância
+
+- Variam de 0 a INF
+- Simétricas (consideram **duplos zeros**) 
+- Assimétricas (ignoram os **duplos zeros**)
+- Há dezenas delas...
 
 
+&lt;img src="https://miro.medium.com/max/2400/1*2J3iaDnuLhonNGvlTKthiQ.png" /&gt;
+]
+---
+# O problema dos **duplos zeros**
+- Quando uma espécies X está ausete de duas amostras elas:
+   - são similares? ou são diferentes?
+--
+   
+&lt;img src="https://www.davidzeleny.net/anadat-r/lib/exe/fetch.php/obrazky:double-zero-illustration.png" /&gt;
 
 
+fig by [David Zelený](https://www.davidzeleny.net/anadat-r/doku.php/en:similarity)
+
+---
+# Como funcionam os índices?
+
+![Os quadrantes da similaridade](libs/simi_index.png)
+
+fig by [David Zelený](https://www.davidzeleny.net/anadat-r/doku.php/en:similarity)
 
 
+---
+class: center
+# Como funionam as medidas de distância?
+&lt;img src="https://www.davidzeleny.net/anadat-r/lib/exe/fetch.php/obrazky:triangle_inequality_principle.jpg" height = 500/&gt;
+.pull-left[fig by [David Zelený](https://www.davidzeleny.net/anadat-r/doku.php/en:similarity)]
+---
+# Algumas aplicações
+
+.panelset[
+.panel[.panel-name[R Code]
 
 
+```r
+dist(spe[1:5,1:5], method = "euclidian")
+```
 
+```
+##          1        2        3        4
+## 2 5.385165                           
+## 3 7.348469 2.236068                  
+## 4 7.141428 2.449490 1.000000         
+## 5 3.741657 3.316625 4.690416 4.123106
+```
+]
 
+.panel[.panel-name[Plot]
+![](slide_med_assoc_files/figure-html/unnamed-chunk-3-1.png)&lt;!-- --&gt;
 
+]
+]
+---
+# Exemplos da literatura
+The role of spatial and environmental variables in shaping aquatic insect assemblages in two protected areas in the transition area between Cerrado and Amazônia _Biota Neotrop. vol.20 no.3 Campinas  2020  Epub June 24, 2020_
+http://dx.doi.org/10.1590/1676-0611-bn-2019-0923
+.center[
+&lt;img src="https://www.scielo.br/img/revistas/bn/v20n3//1676-0611-bn-20-03-e20190932-gf03.jpg"  width="70%" /&gt;
+]
+
+---
+# Exemplos da literatura
+
+![Relações entre similaridade e gradientes ambientais e geográficos](libs/hanna.png)
+[Tumisto et al (2003)](https://is.muni.cz/el/1431/jaro2014/Bi0662/um/47273497/_Tuomisto_etal_2003_Science_floristic-variation_Amazonian-forests.pdf)
+
+---
+# Exemplos da literatura
+
+&lt;img src="https://www.frontiersin.org/files/Articles/396937/fevo-06-00194-HTML/image_m/fevo-06-00194-g001.jpg" /&gt;
+
+- Similaridade se deve à:
+   - Troca de espécies entre comuniades
+   - Subamostras de espécies
+   - Ambos processos
+---
+class: center, middle
+# FIM
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

@@ -19,9 +19,16 @@ library(xaringanExtra)
 xaringanExtra::style_share_again(share_buttons = c("twitter", "linkedin", "pocket"))
 knitr::opts_chunk$set(echo = TRUE)
 ```
----
 
 # Medidas de associação
+
+*Slides* 
+```{r , echo=FALSE}
+
+xaringanExtra::embed_xaringan(url="https://fplmelo.github.io/eco_numerica/slides/slide_med_assoc.html#1", ratio = "16:9")
+
+```
+
 
 Na ecologia usamos muitas medidas que fazem uma _ligação_ entre pares de dados. Esses _pares de dados_ podem ser espécies, ou locais de coleta. Há uma enorme variedade de métricas que vão nos oferecer uma medida de associação entre pares. Essas medidas são reportadas na forma de índices ou métricas que têm naturezas distintas, mas todas tem a particularidade de gerar uma matriz quadrada e simétrica de dimensões _n x n_ quando se comparam objetos ou _p x p_ quando se comparam variáveis (as letras são conveções). Essas matrizes de assossiação serão criadas e facilmente pelas análises, mas o pesquisador aqui tem um papel fundamental: **escolher as métricas**
 
@@ -29,11 +36,19 @@ Na ecologia usamos muitas medidas que fazem uma _ligação_ entre pares de dados
 
 _Como de constume, vamos seguir nessa disciplina o roteiro proposto pelo livro texto [**Numerical Ecology with R**](http://jinliangliu.weebly.com/uploads/2/5/7/8/25781074/numerical_ecology_with_r.pdf)._
 
+Novamente, isso é uma convenção para distinguir as comparações entre objetos _*Q-mode*_ ou variáveis _*R-mode*_. As comparações entre objetos são geralmente feitas através de medidas de _distância_ enquanto as comparações entre variáveis são realizadas com medidas de _dependência_. 
+
 ### O problema dos zeros
 
-Todas as matrizes de dados ecológicos costumam ter zeros. Esses podem ser naturais (observações) ou simplesmente ausências de dados. Mas precisamos ter ideia de quão importantes são os zeros.
+Todas as matrizes de dados ecológicos costumam ter zeros. Esses podem ser naturais (observações) ou simplesmente ausências de dados. Mas precisamos ter ideia de quão importantes são os zeros. No livro *Numerical Ecology* o exemplo dado para que entendamos os papel dos zeros em matrizes ecológicas é claro. Quando zeros são resultados de mediação de uma vairável, como concentroação de Oxigênio, a interpretação é clara, sem oxigênio, sem vida aeróbica e portanto zero frequência de vida aeróbica nessas condições é esperado. Agora, que tal se obtemos zeros em concetrações intermediárias de qualquer variável ambiental? As epécies  *não* ocorrem aí porque tem pouco ou muito oxigênio? Note que aí temos uma interpretação diferente para cada situação. Ainda, em ambos casos a informção de _ausência_ ou _presença_ tem um significado ecológico, mas não sabemos as causas das _ausências_.
 
+<img src="https://www.davidzeleny.net/anadat-r/lib/exe/fetch.php/obrazky:double-zero-illustration.png" />
+
+Note que as amostras A, B e C não capturaram a espécie cuja presença/abundância está representada pela linha vermelha. Portano, se essa for a única diferença entre as amostras A, B e C, os índices que não são sensíveis a este problema, não caprutam essa diferenaça e consideram que a similaridade entre A e B é igual a A e C ou B E C. Mas não é. VOcê poderia dizer porque?
+
+### praticando...
 Uma boa maneira é checar se há zeros provenientes de valores vazios ou **NA**
+
 ```{r  include=TRUE}
 load("/home/felipe/Google Drive/github/eco_numerica/data/NEwR-2ed_code_data/NEwR2-Data/Doubs.RData")
 
@@ -53,5 +68,104 @@ image(as.matrix(spe_na))
 ```
 
 Os valores em branco são os NAs e as cores indicam as abundâncias, sendo quanto mais vermelho, mais abundante.
+
+### Perguntas para se ter em mente
+
+- Você está comparando espécies (Q-mode) ou veriáveis ambientais (R-mode)?
+- Seus dados são binários (presenças e ausências), quantitativos (medidas contínuas) ou mistos (coeficientes, categorias não binárias)?
+
+# Comparando comunidades com dados de abundância (Q-mode)
+
+Vamos continuar usando os dados do livro *Numerical Ecology with R* para nossos exemplos, mas vamos mudar algumas funções de visualização. 
+
+Vamos usar os dados das espécies de peixes que já conhecemos
+```{r, echo=TRUE, results='hide'}
+spe # base dos peixes da Suiça
+```
+Esses dados são quantitativos e as abundâncias variam de zero a 5 indivíduos. Como temos muitas espécies e muitas espécies raras, a escolha inicial dos índices é da família que consideramos *_assimétrica*_ como o Bray-Curtis, que pode ser calculado diretamente nas abundâncias ou na base de dados _transformada_ via funções que reduzem a diferença entre as abundâncias de espécies dominantes e raras.
+
+```{r, include=FALSE, echo=TRUE}
+# Load packages, functions and data ===============================
+library(ade4)
+library(adespatial)
+library(vegan)
+library(gclus)
+library(cluster)
+library(FD)
+source("/home/felipe/Google Drive/github/eco_numerica/data/NEwR-2ed_code_data/NEwR2-Functions/coldiss.R")
+source("/home/felipe/Google Drive/github/eco_numerica/data/NEwR-2ed_code_data/NEwR2-Functions/panelutils.R")
+```
+só precisa fazer uma vez, depois não mais.
+```{r}
+# Remove empty site 8
+spe <- spe[-8, ]
+env <- env[-8, ]
+spa <- spa[-8, ]
+```
+
+Agora vamos comparar as medidas de dissimilaridade aplicadas
+```{r echo=TRUE}
+spe.db <- vegdist(spe)	# method = "bray" (default)
+head(spe.db)
+# on log-transformed abundances
+spe.dbln <- vegdist(log1p(spe))
+head(spe.dbln)
+# Chord distance matrix
+spe.norm <- decostand(spe, "nor")
+spe.dc <- dist(spe.norm)
+head(spe.dc)
+# Hellinger distance matrix
+spe.hel <- decostand(spe, "hel")
+spe.dh <- dist(spe.hel) # Hellinger is the default distance
+head(spe.dh)
+```
+
+### Exercício Q-Mode
+
+Tente fazer uma representação gráfica de cada uma dessas matrizes com os diferentes índices e compará-la
+
+Escreva emaicxo seus códigos e interprete os resultados escrevendo embaixo
+
+```{r}
+library(corrplot)
+corrplot(as.matrix(spe.db), is.corr = FALSE) # usei essa função que gera correlogramas mais bonitos
+```
+
+```{r}
+corrplot(as.matrix(spe.dh), is.corr = FALSE) # usei essa função que gera correlogramas mais bonitos
+```
+
+
+# Comparando comunidades com dados binários (Q-mode)
+
+Há muitas ocasiões em que temos apenas dados de _presença_ ou _ausência_ das espécies que estudamos. Isso é muito comum para grupos biológicos onde as abundâncias não podem ser medidas com precisão, como briófitas ou grandes mamíferos. Os dados de presença e ausência também podem ser "gerados", covnertendo à partir das abundâncias. Há perguntas especpíficas e áreas de conhecimento como a Biogeografia, onde a presença/ausência pode ser mais informativa que as abundâncias. Esses dados são geralmente tratados com índices em vez de medidas distância porque justamente, eles não cumprem com os pré-requisitos para serem considerados simétricos.
+
+![A lógica dos índices de similaridade binários](slides/libs/simi_index.png)
+fig by [David Zelený](https://www.davidzeleny.net/anadat-r/doku.php/en:similarity)
+
+# Prós e contras de dados de abundância e presença e ausência
+
+1) Dados de abundância podem se transformados em presença/ausência. Não o contrário
+2) Abundâncias são informações valiosas para muuuuitas análises ecológicas. Sempre procure coletar abundâncias.
+3) Abundância traz pelos menos duas informações ecológicas importantes:
+  a. A óbvia ocorrência ou não de uma espécie num determinado gradiente ambiental, e;
+  b. O grau de adaptabilidade (fitness) que essa espécie possui. Quanto mais abundante, melhor o habitat para ela, _em tese_.
+  c. A abundância também informa sobre as interações bióticas, que provavelmente favorecem espécies abundantes.
+4) A ocorrência é mito poderosa para testar limitação de dispesão de espécies, ou seja, a probabilidade de encontrar espécies ao longo de uma paisagem ou gradiente ambiental.
+5) As ocorrências são poderosas para testar relações com gradientes ambientais em análises do tipo _"unconstrained"_, que não vamos abordar muito nessa disciplina mas que eventualmente podemos precisar.
+
+# Exemplos da literatura
+
+![*Homogeneização da Mata Atlântica*](images/lobo.png)
+
+Neste trabalho de [*Lobo et al (2011)*](https://onlinelibrary.wiley.com/doi/pdf/10.1111/j.1472-4642.2010.00739.x) mostramos como a Mata Atlântica vem sofrendo com o processod e homogeneização biótica decorrente da perturbação antrópica. Testamos isso justamente com uma matriz de similaridade de espécies qque agrupamos em 12 tipos de fitofisionomias e em dois períodos de tempo (prá-1980 e pós-1980). Nossos dados eram apenas de presença e ausência em localidades de coleta, através de dados de herbário. Dê uma olhada no artigo e veja como dados de ocorrência foram usados.
+
+
+![Como a Beta-diversidade pode informar sobre a conservação?](images/beta.png)
+Neste artigo [Scholar et al (2016)](https://www.cell.com/trends/ecology-evolution/fulltext/S0169-5347(15)00289-X) mostram como o domínio conceitua da beta-diversidade é importante para pensar e planejar a conservação da biodiversidade. Aqui não te nada de índices nem medidas mas conceitos. Esses conceitos dão sentido às perguntas que fazemos na ciência e ajudam a escolher as melhores métricas. 
+
+
+Os desdrobamentos dos conceitos e aplicações da beta-diversidade são fundamentais para uma correta aplicação das métricas de assossiação. Índices de similaridade e medidas de distância são maneiras de quantificar diversidade beta entre comunidades biológicas. 
+
 
 

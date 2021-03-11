@@ -28,6 +28,7 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/fitvids-2.1.1/fitvids.min.js"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -413,16 +414,25 @@ div.tocify {
 </div>
 
 
-<hr />
 <div id="medidas-de-associação" class="section level1">
 <h1>Medidas de associação</h1>
+<p><em>Slides</em> <div class="shareagain" style="min-width:300px;margin:1em auto;">
+<iframe src="https://fplmelo.github.io/eco_numerica/slides/slide_med_assoc.html#1" width="1600" height="900" style="border:2px solid currentColor;" loading="lazy" allowfullscreen></iframe>
+<script>fitvids('.shareagain', {players: 'iframe'});</script>
+</div></p>
 <p>Na ecologia usamos muitas medidas que fazem uma <em>ligação</em> entre pares de dados. Esses <em>pares de dados</em> podem ser espécies, ou locais de coleta. Há uma enorme variedade de métricas que vão nos oferecer uma medida de associação entre pares. Essas medidas são reportadas na forma de índices ou métricas que têm naturezas distintas, mas todas tem a particularidade de gerar uma matriz quadrada e simétrica de dimensões <em>n x n</em> quando se comparam objetos ou <em>p x p</em> quando se comparam variáveis (as letras são conveções). Essas matrizes de assossiação serão criadas e facilmente pelas análises, mas o pesquisador aqui tem um papel fundamental: <strong>escolher as métricas</strong></p>
 <div id="q-mode-r-mode" class="section level2">
 <h2>Q mode &amp; R mode</h2>
 <p><em>Como de constume, vamos seguir nessa disciplina o roteiro proposto pelo livro texto <a href="http://jinliangliu.weebly.com/uploads/2/5/7/8/25781074/numerical_ecology_with_r.pdf"><strong>Numerical Ecology with R</strong></a>.</em></p>
+<p>Novamente, isso é uma convenção para distinguir as comparações entre objetos <em><em>Q-mode</em></em> ou variáveis <em><em>R-mode</em></em>. As comparações entre objetos são geralmente feitas através de medidas de <em>distância</em> enquanto as comparações entre variáveis são realizadas com medidas de <em>dependência</em>.</p>
 <div id="o-problema-dos-zeros" class="section level3">
 <h3>O problema dos zeros</h3>
-<p>Todas as matrizes de dados ecológicos costumam ter zeros. Esses podem ser naturais (observações) ou simplesmente ausências de dados. Mas precisamos ter ideia de quão importantes são os zeros.</p>
+<p>Todas as matrizes de dados ecológicos costumam ter zeros. Esses podem ser naturais (observações) ou simplesmente ausências de dados. Mas precisamos ter ideia de quão importantes são os zeros. No livro <em>Numerical Ecology</em> o exemplo dado para que entendamos os papel dos zeros em matrizes ecológicas é claro. Quando zeros são resultados de mediação de uma vairável, como concentroação de Oxigênio, a interpretação é clara, sem oxigênio, sem vida aeróbica e portanto zero frequência de vida aeróbica nessas condições é esperado. Agora, que tal se obtemos zeros em concetrações intermediárias de qualquer variável ambiental? As epécies <em>não</em> ocorrem aí porque tem pouco ou muito oxigênio? Note que aí temos uma interpretação diferente para cada situação. Ainda, em ambos casos a informção de <em>ausência</em> ou <em>presença</em> tem um significado ecológico, mas não sabemos as causas das <em>ausências</em>.</p>
+<p><img src="https://www.davidzeleny.net/anadat-r/lib/exe/fetch.php/obrazky:double-zero-illustration.png" /></p>
+<p>Note que as amostras A, B e C não capturaram a espécie cuja presença/abundância está representada pela linha vermelha. Portano, se essa for a única diferença entre as amostras A, B e C, os índices que não são sensíveis a este problema, não caprutam essa diferenaça e consideram que a similaridade entre A e B é igual a A e C ou B E C. Mas não é. VOcê poderia dizer porque?</p>
+</div>
+<div id="praticando" class="section level3">
+<h3>praticando…</h3>
 <p>Uma boa maneira é checar se há zeros provenientes de valores vazios ou <strong>NA</strong></p>
 <pre class="r"><code>load(&quot;/home/felipe/Google Drive/github/eco_numerica/data/NEwR-2ed_code_data/NEwR2-Data/Doubs.RData&quot;)
 
@@ -467,10 +477,90 @@ head(is.na(spe_na))</code></pre>
 ## 6 FALSE TRUE TRUE  TRUE TRUE FALSE TRUE TRUE TRUE FALSE TRUE TRUE TRUE</code></pre>
 <p>Nesse caso até um gráfico pode nos ajudar a ter uma dimensão da importância dos zeros NAs</p>
 <pre class="r"><code>image(as.matrix(spe_na))</code></pre>
-<p><img src="med_assoc_files/figure-html/unnamed-chunk-3-1.png" width="600px" /></p>
+<p><img src="med_assoc_files/figure-html/unnamed-chunk-4-1.png" width="600px" /></p>
 <p>Os valores em branco são os NAs e as cores indicam as abundâncias, sendo quanto mais vermelho, mais abundante.</p>
 </div>
+<div id="perguntas-para-se-ter-em-mente" class="section level3">
+<h3>Perguntas para se ter em mente</h3>
+<ul>
+<li>Você está comparando espécies (Q-mode) ou veriáveis ambientais (R-mode)?</li>
+<li>Seus dados são binários (presenças e ausências), quantitativos (medidas contínuas) ou mistos (coeficientes, categorias não binárias)?</li>
+</ul>
 </div>
+</div>
+</div>
+<div id="comparando-comunidades-com-dados-de-abundância-q-mode" class="section level1">
+<h1>Comparando comunidades com dados de abundância (Q-mode)</h1>
+<p>Vamos continuar usando os dados do livro <em>Numerical Ecology with R</em> para nossos exemplos, mas vamos mudar algumas funções de visualização.</p>
+<p>Vamos usar os dados das espécies de peixes que já conhecemos</p>
+<pre class="r"><code>spe # base dos peixes da Suiça</code></pre>
+<p>Esses dados são quantitativos e as abundâncias variam de zero a 5 indivíduos. Como temos muitas espécies e muitas espécies raras, a escolha inicial dos índices é da família que consideramos *_assimétrica*_ como o Bray-Curtis, que pode ser calculado diretamente nas abundâncias ou na base de dados <em>transformada</em> via funções que reduzem a diferença entre as abundâncias de espécies dominantes e raras.</p>
+<p>só precisa fazer uma vez, depois não mais.</p>
+<pre class="r"><code># Remove empty site 8
+spe &lt;- spe[-8, ]
+env &lt;- env[-8, ]
+spa &lt;- spa[-8, ]</code></pre>
+<p>Agora vamos comparar as medidas de dissimilaridade aplicadas</p>
+<pre class="r"><code>spe.db &lt;- vegdist(spe)  # method = &quot;bray&quot; (default)
+head(spe.db)</code></pre>
+<pre><code>## [1] 0.6000000 0.6842105 0.7500000 0.8918919 0.7500000 0.6842105</code></pre>
+<pre class="r"><code># on log-transformed abundances
+spe.dbln &lt;- vegdist(log1p(spe))
+head(spe.dbln)</code></pre>
+<pre><code>## [1] 0.5509095 0.6280761 0.7446012 0.8664653 0.7657643 0.6519273</code></pre>
+<pre class="r"><code># Chord distance matrix
+spe.norm &lt;- decostand(spe, &quot;nor&quot;)
+spe.dc &lt;- dist(spe.norm)
+head(spe.dc)</code></pre>
+<pre><code>## [1] 0.7653669 0.9235374 1.0432236 1.2786132 1.1153793 0.8873116</code></pre>
+<pre class="r"><code># Hellinger distance matrix
+spe.hel &lt;- decostand(spe, &quot;hel&quot;)
+spe.dh &lt;- dist(spe.hel) # Hellinger is the default distance
+head(spe.dh)</code></pre>
+<pre><code>## [1] 0.8420247 0.9391305 1.0616631 1.2308244 1.1153793 0.9391305</code></pre>
+<div id="exercício-q-mode" class="section level3">
+<h3>Exercício Q-Mode</h3>
+<p>Tente fazer uma representação gráfica de cada uma dessas matrizes com os diferentes índices e compará-la</p>
+<p>Escreva emaicxo seus códigos e interprete os resultados escrevendo embaixo</p>
+<pre class="r"><code>library(corrplot)</code></pre>
+<pre><code>## corrplot 0.84 loaded</code></pre>
+<pre class="r"><code>corrplot(as.matrix(spe.db), is.corr = FALSE) # usei essa função que gera correlogramas mais bonitos</code></pre>
+<p><img src="med_assoc_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<pre class="r"><code>corrplot(as.matrix(spe.dh), is.corr = FALSE) # usei essa função que gera correlogramas mais bonitos</code></pre>
+<p><img src="med_assoc_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+</div>
+</div>
+<div id="comparando-comunidades-com-dados-binários-q-mode" class="section level1">
+<h1>Comparando comunidades com dados binários (Q-mode)</h1>
+<p>Há muitas ocasiões em que temos apenas dados de <em>presença</em> ou <em>ausência</em> das espécies que estudamos. Isso é muito comum para grupos biológicos onde as abundâncias não podem ser medidas com precisão, como briófitas ou grandes mamíferos. Os dados de presença e ausência também podem ser “gerados”, covnertendo à partir das abundâncias. Há perguntas especpíficas e áreas de conhecimento como a Biogeografia, onde a presença/ausência pode ser mais informativa que as abundâncias. Esses dados são geralmente tratados com índices em vez de medidas distância porque justamente, eles não cumprem com os pré-requisitos para serem considerados simétricos.</p>
+<p><img src="slides/libs/simi_index.png" alt="A lógica dos índices de similaridade binários" /> fig by <a href="https://www.davidzeleny.net/anadat-r/doku.php/en:similarity">David Zelený</a></p>
+</div>
+<div id="prós-e-contras-de-dados-de-abundância-e-presença-e-ausência" class="section level1">
+<h1>Prós e contras de dados de abundância e presença e ausência</h1>
+<ol style="list-style-type: decimal">
+<li>Dados de abundância podem se transformados em presença/ausência. Não o contrário</li>
+<li>Abundâncias são informações valiosas para muuuuitas análises ecológicas. Sempre procure coletar abundâncias.</li>
+<li>Abundância traz pelos menos duas informações ecológicas importantes:</li>
+</ol>
+<ol style="list-style-type: lower-alpha">
+<li>A óbvia ocorrência ou não de uma espécie num determinado gradiente ambiental, e;</li>
+<li>O grau de adaptabilidade (fitness) que essa espécie possui. Quanto mais abundante, melhor o habitat para ela, <em>em tese</em>.</li>
+<li>A abundância também informa sobre as interações bióticas, que provavelmente favorecem espécies abundantes.</li>
+</ol>
+<ol start="4" style="list-style-type: decimal">
+<li>A ocorrência é mito poderosa para testar limitação de dispesão de espécies, ou seja, a probabilidade de encontrar espécies ao longo de uma paisagem ou gradiente ambiental.</li>
+<li>As ocorrências são poderosas para testar relações com gradientes ambientais em análises do tipo <em>“unconstrained”</em>, que não vamos abordar muito nessa disciplina mas que eventualmente podemos precisar.</li>
+</ol>
+</div>
+<div id="exemplos-da-literatura" class="section level1">
+<h1>Exemplos da literatura</h1>
+<div class="figure">
+<img src="images/lobo.png" alt="" />
+<p class="caption"><em>Homogeneização da Mata Atlântica</em></p>
+</div>
+<p>Neste trabalho de <a href="https://onlinelibrary.wiley.com/doi/pdf/10.1111/j.1472-4642.2010.00739.x"><em>Lobo et al (2011)</em></a> mostramos como a Mata Atlântica vem sofrendo com o processod e homogeneização biótica decorrente da perturbação antrópica. Testamos isso justamente com uma matriz de similaridade de espécies qque agrupamos em 12 tipos de fitofisionomias e em dois períodos de tempo (prá-1980 e pós-1980). Nossos dados eram apenas de presença e ausência em localidades de coleta, através de dados de herbário. Dê uma olhada no artigo e veja como dados de ocorrência foram usados.</p>
+<p><img src="images/beta.png" alt="Como a Beta-diversidade pode informar sobre a conservação?" /> Neste artigo <a href="https://www.cell.com/trends/ecology-evolution/fulltext/S0169-5347(15)00289-X">Scholar et al (2016)</a> mostram como o domínio conceitua da beta-diversidade é importante para pensar e planejar a conservação da biodiversidade. Aqui não te nada de índices nem medidas mas conceitos. Esses conceitos dão sentido às perguntas que fazemos na ciência e ajudam a escolher as melhores métricas.</p>
+<p>Os desdrobamentos dos conceitos e aplicações da beta-diversidade são fundamentais para uma correta aplicação das métricas de assossiação. Índices de similaridade e medidas de distância são maneiras de quantificar diversidade beta entre comunidades biológicas.</p>
 </div>
 
 
