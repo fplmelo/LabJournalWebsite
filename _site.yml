@@ -22,8 +22,3 @@ navbar:
         - text: "Medidas de Associação"
           href: med_assoc.html
         - text: "---------"
-        - text: "Aula 3"
-          href: page-c.html
-        - text: "Aula 4"
-          href: page-d.html
-      
