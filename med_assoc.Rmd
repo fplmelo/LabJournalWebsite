@@ -92,6 +92,7 @@ library(vegan)
 library(gclus)
 library(cluster)
 library(FD)
+library(corrplot)
 source("/home/felipe/Google Drive/github/eco_numerica/data/NEwR-2ed_code_data/NEwR2-Functions/coldiss.R")
 source("/home/felipe/Google Drive/github/eco_numerica/data/NEwR-2ed_code_data/NEwR2-Functions/panelutils.R")
 ```
@@ -127,12 +128,14 @@ Tente fazer uma representação gráfica de cada uma dessas matrizes com os dife
 Escreva emaicxo seus códigos e interprete os resultados escrevendo embaixo
 
 ```{r}
-library(corrplot)
-corrplot(as.matrix(spe.db), is.corr = FALSE) # usei essa função que gera correlogramas mais bonitos
+
+coldiss(spe.db, diag = TRUE)
+
 ```
 
 ```{r}
-corrplot(as.matrix(spe.dh), is.corr = FALSE) # usei essa função que gera correlogramas mais bonitos
+coldiss(spe.dh, diag = TRUE)
+
 ```
 
 
@@ -167,5 +170,58 @@ Neste artigo [Scholar et al (2016)](https://www.cell.com/trends/ecology-evolutio
 
 Os desdrobamentos dos conceitos e aplicações da beta-diversidade são fundamentais para uma correta aplicação das métricas de assossiação. Índices de similaridade e medidas de distância são maneiras de quantificar diversidade beta entre comunidades biológicas. 
 
+# Q mode para dados ambientais
+
+As vairáveis ambientais _env_ são dados contínuos que não possuem "problema" dos duplos zeros. Potanto, as medidas de distância são perfeitamente aplicáveis a elas. Dessas, a distância euclidiana, que á a distãncia entre dois pontos medida pela clássica fórmula de Pitágoras, é a medida de escolha inicial.
+
+```{r}
+env2<- env[,-1] # remover 'dfs' que é uma variável espacial, não ambiental
+env.de<-dist(scale(env2)) # use a função "scale" para transformar osdados em z-scores, já que dados de magnitude muito diferentes podem criar disorções no cálculo de distâncias.
+corrplot(as.matrix(env.de), is.corr = FALSE) 
+
+```
+
+Lembrem-se que nessa matriz, os números são as amostras, que começam em 1 na nascente do rio e terminam em 30 no ponto mais distante. Conseguem ver algum padrão? tentem entender a matriz, dê exemplos de pontos muitos parecidos e outros muito dissimilares. Será que você está lendo a matriz corretamente?
+
+## Distâncias geográficas
+
+```{r}
+spa.de<-dist(spa)
+coldiss(spa.de, diag = TRUE)
+```
+
+```{r}
+dfs.df<-as.data.frame(env$dfs, row.names = rownames(env))
+riv.de<-dist(dfs.df)
+coldiss(riv.de, diag = TRUE)
+```
 
 
+# R mode para dados ambientais ou espécies
+
+A lógica aqui é saber quais variáveis ou espécies estão correlacionadas e não o quão similar cada par de site ou espécies pode ser. Nesse caso, usamos basicamente testes de _correlação_ ou _covariança_. Essa informação é poderosa, pois pode tanto expressar gradientes ambientais complexos (várias variáveis ambientais se comportnaod de maneira similar) ou a co-ocorrência de espécies. Vejamos:
+
+## Variáveis ambientais
+
+```{r}
+cor.env<-cor(env2)
+coldiss(cor.env, diag = T)
+```
+
+Consegue ideintificar grupos de variáveis ambientais que covariam?
+
+## Espécies que covariam
+
+```{r}
+spe.t <- t(spe)
+# Chi-square pre-transformation followed by Euclidean distance
+spe.t.chi <- decostand(spe.t, "chi.square")
+spe.t.D16 <- dist(spe.t.chi)
+coldiss(spe.t.D16, diag = TRUE)
+```
+
+Consegue identificar grupos de espécies?
+
+# Em resumo...
+
+![Tabela de decisão para uso de medidas de similaridade](images/table_simi2.png)

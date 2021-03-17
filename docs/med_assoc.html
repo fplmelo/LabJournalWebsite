@@ -516,11 +516,9 @@ head(spe.dh)</code></pre>
 <h3>Exercício Q-Mode</h3>
 <p>Tente fazer uma representação gráfica de cada uma dessas matrizes com os diferentes índices e compará-la</p>
 <p>Escreva emaicxo seus códigos e interprete os resultados escrevendo embaixo</p>
-<pre class="r"><code>library(corrplot)</code></pre>
-<pre><code>## corrplot 0.84 loaded</code></pre>
-<pre class="r"><code>corrplot(as.matrix(spe.db), is.corr = FALSE) # usei essa função que gera correlogramas mais bonitos</code></pre>
+<pre class="r"><code>coldiss(spe.db, diag = TRUE)</code></pre>
 <p><img src="med_assoc_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
-<pre class="r"><code>corrplot(as.matrix(spe.dh), is.corr = FALSE) # usei essa função que gera correlogramas mais bonitos</code></pre>
+<pre class="r"><code>coldiss(spe.dh, diag = TRUE)</code></pre>
 <p><img src="med_assoc_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 </div>
 </div>
@@ -555,6 +553,53 @@ head(spe.dh)</code></pre>
 <p>Neste trabalho de <a href="https://onlinelibrary.wiley.com/doi/pdf/10.1111/j.1472-4642.2010.00739.x"><em>Lobo et al (2011)</em></a> mostramos como a Mata Atlântica vem sofrendo com o processod e homogeneização biótica decorrente da perturbação antrópica. Testamos isso justamente com uma matriz de similaridade de espécies qque agrupamos em 12 tipos de fitofisionomias e em dois períodos de tempo (prá-1980 e pós-1980). Nossos dados eram apenas de presença e ausência em localidades de coleta, através de dados de herbário. Dê uma olhada no artigo e veja como dados de ocorrência foram usados.</p>
 <p><img src="images/beta.png" alt="Como a Beta-diversidade pode informar sobre a conservação?" /> Neste artigo <a href="https://www.cell.com/trends/ecology-evolution/fulltext/S0169-5347(15)00289-X">Scholar et al (2016)</a> mostram como o domínio conceitua da beta-diversidade é importante para pensar e planejar a conservação da biodiversidade. Aqui não te nada de índices nem medidas mas conceitos. Esses conceitos dão sentido às perguntas que fazemos na ciência e ajudam a escolher as melhores métricas.</p>
 <p>Os desdrobamentos dos conceitos e aplicações da beta-diversidade são fundamentais para uma correta aplicação das métricas de assossiação. Índices de similaridade e medidas de distância são maneiras de quantificar diversidade beta entre comunidades biológicas.</p>
+</div>
+<div id="q-mode-para-dados-ambientais" class="section level1">
+<h1>Q mode para dados ambientais</h1>
+<p>As vairáveis ambientais <em>env</em> são dados contínuos que não possuem “problema” dos duplos zeros. Potanto, as medidas de distância são perfeitamente aplicáveis a elas. Dessas, a distância euclidiana, que á a distãncia entre dois pontos medida pela clássica fórmula de Pitágoras, é a medida de escolha inicial.</p>
+<pre class="r"><code>env2&lt;- env[,-1] # remover &#39;dfs&#39; que é uma variável espacial, não ambiental
+env.de&lt;-dist(scale(env2)) # use a função &quot;scale&quot; para transformar osdados em z-scores, já que dados de magnitude muito diferentes podem criar disorções no cálculo de distâncias.
+corrplot(as.matrix(env.de), is.corr = FALSE) </code></pre>
+<p><img src="med_assoc_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>Lembrem-se que nessa matriz, os números são as amostras, que começam em 1 na nascente do rio e terminam em 30 no ponto mais distante. Conseguem ver algum padrão? tentem entender a matriz, dê exemplos de pontos muitos parecidos e outros muito dissimilares. Será que você está lendo a matriz corretamente?</p>
+<div id="distâncias-geográficas" class="section level2">
+<h2>Distâncias geográficas</h2>
+<pre class="r"><code>spa.de&lt;-dist(spa)
+coldiss(spa.de, diag = TRUE)</code></pre>
+<p><img src="med_assoc_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<pre class="r"><code>dfs.df&lt;-as.data.frame(env$dfs, row.names = rownames(env))
+riv.de&lt;-dist(dfs.df)
+coldiss(riv.de, diag = TRUE)</code></pre>
+<p><img src="med_assoc_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+</div>
+</div>
+<div id="r-mode-para-dados-ambientais-ou-espécies" class="section level1">
+<h1>R mode para dados ambientais ou espécies</h1>
+<p>A lógica aqui é saber quais variáveis ou espécies estão correlacionadas e não o quão similar cada par de site ou espécies pode ser. Nesse caso, usamos basicamente testes de <em>correlação</em> ou <em>covariança</em>. Essa informação é poderosa, pois pode tanto expressar gradientes ambientais complexos (várias variáveis ambientais se comportnaod de maneira similar) ou a co-ocorrência de espécies. Vejamos:</p>
+<div id="variáveis-ambientais" class="section level2">
+<h2>Variáveis ambientais</h2>
+<pre class="r"><code>cor.env&lt;-cor(env2)
+coldiss(cor.env, diag = T)</code></pre>
+<p><img src="med_assoc_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>Consegue ideintificar grupos de variáveis ambientais que covariam?</p>
+</div>
+<div id="espécies-que-covariam" class="section level2">
+<h2>Espécies que covariam</h2>
+<pre class="r"><code>spe.t &lt;- t(spe)
+# Chi-square pre-transformation followed by Euclidean distance
+spe.t.chi &lt;- decostand(spe.t, &quot;chi.square&quot;)
+spe.t.D16 &lt;- dist(spe.t.chi)
+coldiss(spe.t.D16, diag = TRUE)</code></pre>
+<p><img src="med_assoc_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>Consegue identificar grupos de espécies?</p>
+</div>
+</div>
+<div id="em-resumo" class="section level1">
+<h1>Em resumo…</h1>
+<div class="figure">
+<img src="images/table_simi2.png" alt="" />
+<p class="caption">Tabela de decisão para uso de medidas de similaridade</p>
+</div>
 </div>
 
 
