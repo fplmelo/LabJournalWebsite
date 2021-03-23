@@ -27,7 +27,7 @@ Essa é a página da disciplina de Ecologia Numérica para o curso de Bacharelad
 
 2. Você vai editar **SEMPRE** o aqruivo Journal.Rmd. Dê uma sacada no link [Journal page](https://crumplab.github.io/LabJournalWebsite/Journal.html) para ver um exemplo de como começar a editar seu arquivo.
 
-3. COnsulte os [links](https://crumplab.github.io/LabJournalWebsite/Links.html) que contém uma enrome quantidade de material acessório para aprendermos a mexer com essas ferramentas.
+3. Consulte os [links](https://crumplab.github.io/LabJournalWebsite/Links.html) que contém uma enrome quantidade de material acessório para aprendermos a mexer com essas ferramentas.
 
 4. Edite tudo à vontade, é livre.
 
