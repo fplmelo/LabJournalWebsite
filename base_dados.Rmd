@@ -138,6 +138,8 @@ Vamos usar muitos exemplos desse livro durante a disciplina e para acostumar, va
 
 ### Extraindo dados
 
+*Para baixar o livro _Numerical Ecology with R_, clique* [aqui](https://github.com/fplmelo/eco_numerica/raw/558d6c1302c3bff19831c0eee28f53b0a3eb1c69/data/Numerical%20Ecology%20with%20R.pdf)
+
 *Para acessar os dados clique aqui (http://adn.biol.umontreal.ca/~numericalecology/numecolR/NEwR-2ed_code_data.zip)*
 
 Salve a pasta descompactada no diretório local correspondente ao seu repositório do _GitHub_
