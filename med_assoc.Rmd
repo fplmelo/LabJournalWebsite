@@ -7,7 +7,7 @@ output:
     toc: true
     toc_float: true
     collapsed: false
-    toc_depth: 3
+    toc_depth: 1
     #code_folding: hide
       
 ---
@@ -227,7 +227,7 @@ Consegue identificar grupos de espécies?
 
 ![Tabela de decisão para uso de medidas de similaridade](images/table_simi2.png)
 
-# Exercício sobre Medidas de associação
+# Exemplos sobre Medidas de associação
 
 As bases de dados do livro *Numerical Ecology* estão compostas por três matrizes, uma de espécies "spe", outra de variáveis ambientais "env" e outra de variáveis geográficas "spa". Agora que sabemos que as medidas de associação servem para medir a similaridade entre "objetos" que podem ser de qualquer natureza, vamos fazer alguns exerícios.
 
@@ -273,21 +273,135 @@ clust_rio<-hclust(jacc_dist, method = "complete")
 clust_graf<-plot(clust_rio, hang=-1)
 clust_graf
 ```
-Mas não cosigo ver se os grupos que atribui de alto, médio e baixo rio realmente agrupam as espécies.
+Mas não cosigo ver se os grupos que atribui de alto, médio e baixo rio, realmente agrupam as espécies. Vamos fazer algumas modificações nas bases para poder ver se nossa ideia faz sentido, ou seja, se as espécies se agrupam entre alto, médio e baixo rio.
 
-```{r}
+```{r echo=F, message=FALSE}
 require(dendextend) # Esse pacote é necessário para colorir as potnas dos ramos do dendograma
-clust_rio2<-as.dendrogram(clust_rio)
-colors<-c("#E69F00","#56B4E9", "#009E73")
+clust_rio2<-as.dendrogram(clust_rio) # trandformando o cluter num objeto para poder editar
+colors<-c("#E69F00","#56B4E9", "#009E73") # definindo as cores que serão usadas
 colorCode<-c(alto=colors[1], medio=colors[2], baixo=colors[3])
 labels_colors(clust_rio2) <- colorCode[rio][order.dendrogram(clust_rio2)]
 
 ```
 
-Agora podemos plotar o dendograma onde: números amarelos são do alto rio, azuis do médio rio e pretos do baixo rio.
+Agora podemos plotar o dendograma onde: números amarelos são do alto rio, azuis do médio rio e verdes do baixo rio.
 
 ```{r}
 plot(clust_rio2)
 ```
 
 Temos padrão?
+
+E se usássemos em vez do índice de Jaccard, a distância euclidiana? Será que teríamos mais sensibilidade para identificar esses agrupamentos que imaginamos que existem?
+
+```{r}
+euc_dist<-vegdist(spe[,-28], method = "euclidean") # agora é com a distância euclideana
+euc_dist
+```
+
+Vamos ver como ficam os índices...
+
+```{r}
+mean(euc_dist) # Esse é o valor médio da similaridade de jaccard entre todas as combinações possíveis
+library(usedist)
+mean(dist_subset(euc_dist, c(1:8))) # vai pegar as primeiras 9 linhas da matriz e calcular a similaridade média. Isso equivale a similaridade de alto rio
+mean(dist_subset(euc_dist, c(9:18))) # Agora para o médio rio
+
+mean(dist_subset(euc_dist, c(19:28))) # Agora para o baixo rio
+```
+
+E agora, compare os resultados com aqueles do índice de Jaccard, alguma coisa mudou?
+
+```{r}
+clust_rio_euc<-hclust(euc_dist, method = "complete")
+clust_graf_euc<-plot(clust_rio_euc, hang=-1)
+clust_graf_euc
+```
+
+
+Agora vamos colorir o dendograma
+
+```{r}
+clust_rio_euc2<-as.dendrogram(clust_rio_euc) # trandformando o cluster num objeto para poder editar
+colors<-c("#E69F00","#56B4E9", "#009E73") # definindo as cores que serão usadas
+colorCode<-c(alto=colors[1], medio=colors[2], baixo=colors[3])
+labels_colors(clust_rio_euc2) <- colorCode[rio][order.dendrogram(clust_rio_euc2)]
+
+```
+
+Agora podemos plotar o dendograma onde: números amarelos são do alto rio, azuis do médio rio e pretos do baixo rio.
+
+```{r}
+plot(clust_rio_euc2)
+```
+
+Novamente, temos alguma diferença que aponta para uma certa organização das espécies, mas notem que agora parecem mais misturados que quando usamos o índice de Jaccard, mas mesmo essa "mistura" tem um certo padrão, podem perceber?
+
+Aparentemente o _médio rio_ é uma interseção entre comunidades de baixo e alto rio. Será que as variáveis ambientais conseguem explicar isso?
+
+Vamos aplicar o mesmo passo-à-passo para a matriz ambiental
+
+```{r}
+env[,-c(1,4,12)] # aqui eu retirei duas colunas, a que adicionamos com o trecho do rio a quarta e a primeira que eraa distancia linear entre a primeira e as demais amostras.
+env_dist<-vegdist(env[,-c(1,4,12)], method = "euclidean")
+env_dist
+```
+
+Agora as médias totais e entre trechos do rio
+
+```{r}
+mean(env_dist) # Esse é o valor médio da similaridade de jaccard entre todas as combinações possíveis
+
+mean(dist_subset(env_dist, c(1:8))) # vai pegar as primeiras 9 linhas da matriz e calcular a similaridade média. Isso equivale a similaridade de alto rio
+mean(dist_subset(env_dist, c(9:18))) # Agora para o médio rio
+
+mean(dist_subset(env_dist, c(19:28))) # Agora para o baixo rio
+```
+
+Tem coisa interessante aqui... o que será?
+
+```{r}
+clust_env_euc<-hclust(env_dist, method = "complete")
+clust_graf_env_euc<-plot(clust_env_euc, hang=-1)
+clust_graf_env_euc
+```
+
+Vamos colorir o gráfico...
+```{r}
+clust_graf_env_euc2<-as.dendrogram(clust_env_euc) # trandformando o cluster num objeto para poder editar
+colors<-c("#E69F00","#56B4E9", "#009E73") # definindo as cores que serão usadas
+colorCode<-c(alto=colors[1], medio=colors[2], baixo=colors[3])
+labels_colors(clust_graf_env_euc2) <- colorCode[rio][order.dendrogram(clust_graf_env_euc2)]
+
+```
+
+Agora podemos plotar o dendograma onde: números amarelos são do alto rio, azuis do médio rio e pretos do baixo rio.
+
+```{r}
+plot(clust_graf_env_euc2)
+```
+
+E agora? Dá pra entender?
+
+
+Então, bora trabalhar!!!
+
+![](https://media.giphy.com/media/o28elTLxOjiRW/giphy.gif)
+
+# Exercício para entrega
+
+## 1) Faça uma pergunta "hipotética sobre a organização da comunidade de peixes
+
+### **Dica**: em vez do gradiente geográfico qu usei nesse exemplo acima, use um gradiente ambiental expresso por alguma variável da matriz "env"
+
+
+## 2) Calcule matrizes de distância da comunidade biológica usando índices de Sorensen ou Jaccard e alguma medida de distância (euclidiana ou outra qualquer que a função _vegdist_ possa calcular)
+
+
+## 3) Grafique os resultados e crie algumas explicações hipotéticas para sua pergunta, comente os resultados
+
+
+## 4) Brinque com as matrizes ambientais e de distância e tente explicar o fenômeno biológico que você encontrou
+
+# Fim
+
