@@ -13,6 +13,7 @@ output:
 ---
 ```{r setup, include=FALSE}
 library(tidyverse)
+library(vegan)
 library(knitr)
 library(xaringan)
 library(xaringanExtra)
@@ -225,3 +226,68 @@ Consegue identificar grupos de espécies?
 # Em resumo...
 
 ![Tabela de decisão para uso de medidas de similaridade](images/table_simi2.png)
+
+# Exercício sobre Medidas de associação
+
+As bases de dados do livro *Numerical Ecology* estão compostas por três matrizes, uma de espécies "spe", outra de variáveis ambientais "env" e outra de variáveis geográficas "spa". Agora que sabemos que as medidas de associação servem para medir a similaridade entre "objetos" que podem ser de qualquer natureza, vamos fazer alguns exerícios.
+
+Aqui vou demonstrar através de uma pergunta simples, como explorar as medidas de similaridade de modo a obter das bases de dados ecológicos algumas informações importantes para compreender a estrutura de comunidades biológicas e os processos que às mantêm. 
+
+Nesse caso, vou dividir o rio em três seções: "alto", "médio" e "baixo". As amostras de 1 a 10 serão o "alto rio"; as de 11-20 serão o "médio rio" e as de 21-30 serão o "baixo rio". Para isso, vou acrescentar uma coluna com essa informação à bases de dados
+
+```{r, echo=F}
+rio<-c(rep("alto", 9), rep("medio",10), rep("baixo",10)) # criei um vetor com essas ifnormaçoes na ordem desejada
+# opa, havíamos retirado uma comunidade, na linha 8, porque estava vazia. então, o pimeiro grupo temq ue ter 9 e naõ 10 linhas.
+spe$rio<-rio 
+spa$rio<-rio
+env$rio<-rio
+```
+
+
+## Pergunta 1 - Qual a similaridade entre as comunidades de peixes do alto, médio e baixo curso de rio?
+
+método 1) Usando índices de similaridade
+
+```{r}
+jacc_dist<-vegdist(spe[,-28], method = "jaccard") # retirei somente a coluna "rio" porque a função só lê variáveis numéricas
+jacc_dist # Dê uma olhada na matriz, note que os valores estão entre 0 e 1 como previsto
+```
+
+Bom, uma maatriz desse tamanho e con tantas cálulas é difícil de usar para responder a nossa pergunta... mas podemos dar um jeito nisso.
+
+```{r}
+mean(jacc_dist) # Esse é o valor médio da similaridade de jaccard entre todas as combinações possíveis
+library(usedist)
+mean(dist_subset(jacc_dist, c(1:8))) # vai pegar as primeiras 9 linhas da matriz e calcular a similaridade média. Isso equivale a similaridade de alto rio
+mean(dist_subset(jacc_dist, c(9:18))) # Agora para o médio rio
+
+mean(dist_subset(jacc_dist, c(19:28))) # Agora para o baixo rio
+```
+
+Alguma diferença? Dá pra ver assim no *olhômetro*?
+
+Talvez a melhor maneira de visualizar esses pontos seja fazendo um dendograma
+
+```{r}
+clust_rio<-hclust(jacc_dist, method = "complete")
+clust_graf<-plot(clust_rio, hang=-1)
+clust_graf
+```
+Mas não cosigo ver se os grupos que atribui de alto, médio e baixo rio realmente agrupam as espécies.
+
+```{r}
+require(dendextend) # Esse pacote é necessário para colorir as potnas dos ramos do dendograma
+clust_rio2<-as.dendrogram(clust_rio)
+colors<-c("#E69F00","#56B4E9", "#009E73")
+colorCode<-c(alto=colors[1], medio=colors[2], baixo=colors[3])
+labels_colors(clust_rio2) <- colorCode[rio][order.dendrogram(clust_rio2)]
+
+```
+
+Agora podemos plotar o dendograma onde: números amarelos são do alto rio, azuis do médio rio e pretos do baixo rio.
+
+```{r}
+plot(clust_rio2)
+```
+
+Temos padrão?
