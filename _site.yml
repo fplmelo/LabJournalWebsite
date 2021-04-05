@@ -21,4 +21,5 @@ navbar:
           href: base_dados.html
         - text: "Medidas de Associação"
           href: med_assoc.html
-        - text: "---------"
+        - text: "Agrupamento por cluster"
+          href: cluster.html
