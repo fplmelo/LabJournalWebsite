@@ -17,7 +17,7 @@ library(vegan)
 library(knitr)
 library(xaringan)
 library(xaringanExtra)
-xaringanExtra::style_share_again(share_buttons = c("twitter", "linkedin", "pocket"))
+xaringanExtra::style_share_again(share_buttons = c("twitter"))
 load("/home/felipe/Google Drive/github/eco_numerica/data/NEwR-2ed_code_data/NEwR2-Data/Doubs.RData")
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -27,7 +27,7 @@ knitr::opts_chunk$set(echo = TRUE)
 *Slides* 
 ```{r , echo=FALSE}
 
-xaringanExtra::embed_xaringan(url="https://fplmelo.github.io/eco_numerica/slides/slide_med_assoc.html#1", ratio = "16:9")
+xaringanExtra::embed_xaringan(url="https://fplmelo.github.io/eco_numerica/slides/aula3_cluster.html#1", ratio = "16:9")
 
 ```
 
@@ -245,3 +245,9 @@ Vocês verão, se usarem o [script dp capítulo 4](https://fplmelo.github.io/eco
   
   como esse aqui
   ![](https://fplmelo.github.io/eco_numerica/images/doubs_river.png)
+
+3) Avalie com gráficos de boxplot como os clusters são diferenciados em termos ambientais (base "env")
+
+Comente os resltados brevemente, tentando interpretar os resultados biológicos.
+
+#FIM
