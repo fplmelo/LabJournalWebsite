@@ -4,24 +4,24 @@
     <title>Ecologia Numérica</title>
     <meta charset="utf-8" />
     <meta name="author" content="Felipe Melo" />
-    <meta name="date" content="2021-04-06" />
-    <script src="aula3_cluster_files/header-attrs-2.6/header-attrs.js"></script>
-    <link href="aula3_cluster_files/remark-css-0.0.1/robot.css" rel="stylesheet" />
-    <link href="aula3_cluster_files/remark-css-0.0.1/tamu-fonts.css" rel="stylesheet" />
-    <link href="aula3_cluster_files/tile-view-0.2.6/tile-view.css" rel="stylesheet" />
-    <script src="aula3_cluster_files/tile-view-0.2.6/tile-view.js"></script>
-    <script src="aula3_cluster_files/clipboard-2.0.6/clipboard.min.js"></script>
-    <link href="aula3_cluster_files/shareon-1.4.1/shareon.min.css" rel="stylesheet" />
-    <script src="aula3_cluster_files/shareon-1.4.1/shareon.min.js"></script>
-    <link href="aula3_cluster_files/xaringanExtra-shareagain-0.2.6/shareagain.css" rel="stylesheet" />
-    <script src="aula3_cluster_files/xaringanExtra-shareagain-0.2.6/shareagain.js"></script>
-    <script src="aula3_cluster_files/fabric-4.3.1/fabric.min.js"></script>
-    <link href="aula3_cluster_files/xaringanExtra-scribble-0.0.1/scribble.css" rel="stylesheet" />
-    <script src="aula3_cluster_files/xaringanExtra-scribble-0.0.1/scribble.js"></script>
+    <meta name="date" content="2021-04-07" />
+    <script src="slide_aula3_cluster_files/header-attrs-2.6/header-attrs.js"></script>
+    <link href="slide_aula3_cluster_files/remark-css-0.0.1/robot.css" rel="stylesheet" />
+    <link href="slide_aula3_cluster_files/remark-css-0.0.1/tamu-fonts.css" rel="stylesheet" />
+    <link href="slide_aula3_cluster_files/tile-view-0.2.6/tile-view.css" rel="stylesheet" />
+    <script src="slide_aula3_cluster_files/tile-view-0.2.6/tile-view.js"></script>
+    <script src="slide_aula3_cluster_files/clipboard-2.0.6/clipboard.min.js"></script>
+    <link href="slide_aula3_cluster_files/shareon-1.4.1/shareon.min.css" rel="stylesheet" />
+    <script src="slide_aula3_cluster_files/shareon-1.4.1/shareon.min.js"></script>
+    <link href="slide_aula3_cluster_files/xaringanExtra-shareagain-0.2.6/shareagain.css" rel="stylesheet" />
+    <script src="slide_aula3_cluster_files/xaringanExtra-shareagain-0.2.6/shareagain.js"></script>
+    <script src="slide_aula3_cluster_files/fabric-4.3.1/fabric.min.js"></script>
+    <link href="slide_aula3_cluster_files/xaringanExtra-scribble-0.0.1/scribble.css" rel="stylesheet" />
+    <script src="slide_aula3_cluster_files/xaringanExtra-scribble-0.0.1/scribble.js"></script>
     <script>document.addEventListener('DOMContentLoaded', function() { window.xeScribble = new Scribble({"pen_color":["#FF0000"],"pen_size":3,"eraser_size":30}) })</script>
-    <script src="aula3_cluster_files/xaringanExtra_fit-screen-0.2.6/fit-screen.js"></script>
-    <link href="aula3_cluster_files/panelset-0.2.6/panelset.css" rel="stylesheet" />
-    <script src="aula3_cluster_files/panelset-0.2.6/panelset.js"></script>
+    <script src="slide_aula3_cluster_files/xaringanExtra_fit-screen-0.2.6/fit-screen.js"></script>
+    <link href="slide_aula3_cluster_files/panelset-0.2.6/panelset.css" rel="stylesheet" />
+    <script src="slide_aula3_cluster_files/panelset-0.2.6/panelset.js"></script>
   </head>
   <body>
     <textarea id="source">
@@ -31,7 +31,7 @@ class: center, middle, inverse, title-slide
 ## Aula 3 - Agrupamento de cluster
 ### Felipe Melo
 ### Laboratório de Ecologia Aplicada - UFPE
-### 2021-04-06
+### 2021-04-07
 
 ---
 
@@ -144,7 +144,7 @@ library(factoextra)
 ]
 
 .panel[.panel-name[Plot1]
-&lt;img src="aula3_cluster_files/figure-html/unnamed-chunk-3-1.png" width="400px" /&gt;
+&lt;img src="slide_aula3_cluster_files/figure-html/unnamed-chunk-3-1.png" width="400px" /&gt;
 
 ]
 .panel[.panel-name[R Code2]
@@ -155,21 +155,21 @@ k2
 ```
 
 ```
-## K-means clustering with 2 clusters of sizes 10, 20
+## K-means clustering with 2 clusters of sizes 20, 10
 ## 
 ## Cluster means:
 ##     ele   slo   pH  har   pho    nit   amm  oxy  bod
-## 1 833.1 8.360 8.01 70.7 0.139 0.3630 0.060 9.75 4.07
-## 2 305.8 1.065 8.07 93.8 0.767 2.2995 0.284 9.21 5.64
+## 1 305.8 1.065 8.07 93.8 0.767 2.2995 0.284 9.21 5.64
+## 2 833.1 8.360 8.01 70.7 0.139 0.3630 0.060 9.75 4.07
 ## 
 ## Clustering vector:
 ##  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 
-##  1  1  1  1  1  1  1  1  1  1  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2 
+##  2  2  2  2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1 
 ## 27 28 29 30 
-##  2  2  2  2 
+##  1  1  1  1 
 ## 
 ## Within cluster sum of squares by cluster:
-## [1]  87852.16 200947.72
+## [1] 200947.72  87852.16
 ##  (between_SS / total_SS =  86.5 %)
 ## 
 ## Available components:
@@ -179,7 +179,7 @@ k2
 ```
 ]
 .panel[.panel-name[Plot2]
-&lt;img src="aula3_cluster_files/figure-html/unnamed-chunk-5-1.png" width="400px" /&gt;
+&lt;img src="slide_aula3_cluster_files/figure-html/unnamed-chunk-5-1.png" width="400px" /&gt;
 ]
 ]
 ---
