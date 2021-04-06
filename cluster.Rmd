@@ -27,7 +27,7 @@ knitr::opts_chunk$set(echo = TRUE)
 *Slides* 
 ```{r , echo=FALSE}
 
-xaringanExtra::embed_xaringan(url="https://fplmelo.github.io/eco_numerica/slides/aula3_cluster.html#1", ratio = "16:9")
+xaringanExtra::embed_xaringan(url="https://fplmelo.github.io/eco_numerica/slides/slides_aula3_cluster.html#1", ratio = "16:9")
 
 ```
 
@@ -237,17 +237,18 @@ Vocês verão, se usarem o [script dp capítulo 4](https://fplmelo.github.io/eco
 
 ![](https://media.giphy.com/media/xUOxfd3Y6g2C2aSXkc/giphy.gif)
 
-1) Use a base "spe" e tente econtrar grupos de amostras (comunidades) que pertencem à trechos específicos do rio.
-  1.1) teste tanto medidas de distância quanto métodos de agrupamento diferentes
+1) Use a base "spe" e tente econtrar grupos de amostras (comunidades) que pertencem à trechos específicos do rio <br>
 
-2) Use métodos de K-means para encontrar quantos clusters há de fato segundo o método "silhouette"
-  2.2) grafique o o rio colorindo as amostras segundo seu pertencimento aos clusters gerados
+2) teste tanto medidas de distância quanto métodos de agrupamento diferentes
+
+3) Use métodos de K-means para encontrar quantos clusters há de fato segundo o método "silhouette"
+
+4) grafique o rio colorindo as amostras segundo seu pertencimento aos clusters gerados
   
-  como esse aqui
-  ![](https://fplmelo.github.io/eco_numerica/images/doubs_river.png)
 
-3) Avalie com gráficos de boxplot como os clusters são diferenciados em termos ambientais (base "env")
+como esse aqui
+![](https://fplmelo.github.io/eco_numerica/images/doubs_river.png)
 
-Comente os resltados brevemente, tentando interpretar os resultados biológicos.
+5) Avalie com gráficos de boxplot como os clusters são diferenciados em termos ambientais (base "env") e comente os resltados brevemente, tentando interpretar os resultados biológicos.
 
 #FIM
