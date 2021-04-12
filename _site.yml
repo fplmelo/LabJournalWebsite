@@ -23,3 +23,5 @@ navbar:
           href: med_assoc.html
         - text: "Agrupamento por cluster"
           href: cluster.html
+        - text: "Análises de ordenamento - PCA"
+          href: ordenamento.html

@@ -1,0 +1,34 @@
+---
+title: "mètodos de ordenação"
+author: "Felipe Melo"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    collapsed: false
+    toc_depth: 1
+    #code_folding: hide
+      
+---
+```{r setup, include=FALSE}
+library(tidyverse)
+library(vegan)
+library(knitr)
+library(xaringan)
+library(xaringanExtra)
+xaringanExtra::style_share_again(share_buttons = c("twitter"))
+load("/home/felipe/Google Drive/github/eco_numerica/data/NEwR-2ed_code_data/NEwR2-Data/Doubs.RData")
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Análise de Componentes Principais
+
+*Slides* 
+```{r , echo=FALSE}
+xaringanExtra::embed_xaringan(url="https://fplmelo.github.io/eco_numerica/slides/slides_aula4_ordenacao.html#1", ratio = "16:9")
+```
+
+# Em construção
+
+![](http://www.ct.ufpb.br/ccau/contents/noticias/site-em-construcao/em_construcao.jpg/@@images/15d9337f-6fb0-40c7-bc74-03c847b499c3.jpeg)
