@@ -11,17 +11,25 @@
 
 <meta name="author" content="Felipe Melo" />
 
-<meta name="date" content="2021-04-12" />
+<meta name="date" content="2021-04-27" />
 
-<title>mètodos de ordenação</title>
+<title>mètodos de ordenamento, PCA e NMDS</title>
 
-<script src="site_libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
@@ -40,11 +48,6 @@
     </style>
 
 <style type="text/css">code{white-space: pre;}</style>
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
 <script type="text/javascript">
 if (window.hljs) {
   hljs.configure({languages: []});
@@ -57,32 +60,6 @@ if (window.hljs) {
 
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
 
 
 
@@ -93,10 +70,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -113,40 +86,13 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 60px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 65px;
-  margin-top: -65px;
-}
-.section h2 {
-  padding-top: 65px;
-  margin-top: -65px;
-}
-.section h3 {
-  padding-top: 65px;
-  margin-top: -65px;
-}
-.section h4 {
-  padding-top: 65px;
-  margin-top: -65px;
-}
-.section h5 {
-  padding-top: 65px;
-  margin-top: -65px;
-}
-.section h6 {
-  padding-top: 65px;
-  margin-top: -65px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -174,7 +120,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -186,7 +132,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -197,10 +143,23 @@ $(document).ready(function () {
   var menuAnchor = $('a[href="' + href + '"]');
 
   // mark it active
-  menuAnchor.parent().addClass('active');
+  menuAnchor.tab('show');
 
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -212,7 +171,6 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -338,13 +296,13 @@ div.tocify {
 
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
-<div class="col-xs-12 col-sm-4 col-md-3">
+<div class="row">
+<div class="col-sm-12 col-md-4 col-lg-3">
 <div id="TOC" class="tocify">
 </div>
 </div>
 
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+<div class="toc-content col-sm-12 col-md-8 col-lg-9">
 
 
 
@@ -402,27 +360,161 @@ div.tocify {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
 
 
-<h1 class="title toc-ignore">mètodos de ordenação</h1>
+<h1 class="title toc-ignore">mètodos de ordenamento, PCA e NMDS</h1>
 <h4 class="author">Felipe Melo</h4>
-<h4 class="date">2021-04-12</h4>
+<h4 class="date">2021-04-27</h4>
 
 </div>
 
 
 <div id="análise-de-componentes-principais" class="section level1">
 <h1>Análise de Componentes Principais</h1>
-<p><em>Slides</em> <div class="shareagain" style="min-width:300px;margin:1em auto;">
+<p><em>Slides</em></p>
+<div class="shareagain" style="min-width:300px;margin:1em auto;">
 <iframe src="https://fplmelo.github.io/eco_numerica/slides/slides_aula4_ordenacao.html#1" width="1600" height="900" style="border:2px solid currentColor;" loading="lazy" allowfullscreen></iframe>
 <script>fitvids('.shareagain', {players: 'iframe'});</script>
-</div></p>
 </div>
-<div id="em-construção" class="section level1">
-<h1>Em construção</h1>
-<p><img src="http://www.ct.ufpb.br/ccau/contents/noticias/site-em-construcao/em_construcao.jpg/@@images/15d9337f-6fb0-40c7-bc74-03c847b499c3.jpeg" /></p>
+</div>
+<div id="exercícos-para-pca-e-nmds" class="section level1">
+<h1>Exercícos para PCA e NMDS</h1>
+<div id="imagine-que-você-precisa-entender-commo-se-agrupam-as-comunidades-do-rio-que-estamos-estudando.-essa-necessidade-vem-do-fato-de-que-um-usina-hidroelétrica-está-para-ser-construída-no-rio-e-o-governo-encomendou-estudos-de-impacto-ambiental-que-precisam-demonstrar-várias-coisas.-você-como-biólogo-que-está-preocupado-com-o-rio-precisa-converncer-o-governo-de-construir-a-hidroelétrica-num-stor-do-rio-que-tenha-o-menor-impacto-possível.-para-isso-você-vai-precisar-anaalisar-tanto-a-comunidade-de-peixes-quanto-as-condições-fisico-químicas-do-rio." class="section level4">
+<h4>Imagine que você precisa entender commo se agrupam as comunidades do rio que estamos estudando. Essa necessidade vem do fato de que um usina hidroelétrica está para ser construída no rio e o governo encomendou estudos de impacto ambiental que precisam demonstrar várias coisas. Você como biólogo, que está preocupado com o rio, precisa converncer o governo de construir a hidroelétrica num stor do rio que tenha o menor impacto possível. Para isso, você vai precisar anaalisar tanto a comunidade de peixes quanto as condições fisico-químicas do rio.</h4>
+</div>
+<div id="passo-1---faça-uma-pca-pra-a-tabela-env-excluindo-as-colunas-dfs-e-dis.-seu-intuito-em-vez-de-dividir-o-rio-de-maneira-arbitrária-é-encontrar-divisões-naturais-de-características-ambientais-que-possam-ser-separadas-pelo-seu-valor-médio.-examine-os-pcs-1-e-2-e-veja-através-de-historgramas-em-quantas-porçoes-o-rio-pode-ser-dividido." class="section level4">
+<h4>Passo 1 - Faça uma PCA pra a tabela “env” (excluindo as colunas ‘dfs’ e ‘dis’). Seu intuito em vez de dividir o rio de maneira arbitrária é encontrar divisões naturais de características ambientais, que possam ser separadas pelo seu valor médio. Examine os PCs 1 e 2 e veja, através de historgramas em quantas porçoes o rio pode ser dividido.</h4>
+</div>
+<div id="passo-2---faça-um-nmds-para-os-dados-da-comunidade-biológica-spe-e-use-as-mesmas-categorias-que-você-encontrou-no-passo-anterior-para-pintas-as-amostras.-será-que-há-uma-coincidência" class="section level4">
+<h4>Passo 2 - Faça um NMDS para os dados da comunidade biológica “spe” e use as mesmas categorias que você encontrou no passo anterior para pintas as amostras. Será que há uma coincidência?</h4>
+</div>
+<div id="passo-3---use-o-métodos-de-k-means-para-gerar-agrupamentos-automáticos-e-veja-se-eles-coincidem-com-os-que-você-gerou-usando-o-método-anterior" class="section level4">
+<h4>Passo 3 - Use o métodos de K-means para gerar agrupamentos automáticos e veja se eles coincidem com os que você gerou usando o método anterior</h4>
+<p><strong>veja este exemplo simplificado</strong></p>
+<pre class="r"><code>env_simp&lt;-env[,2:4] # escolhi apenas três variáveis
+princomp(env_simp)-&gt; pca_env
+summary(pca_env)</code></pre>
+<pre><code>## Importance of components:
+##                             Comp.1      Comp.2       Comp.3
+## Standard deviation     267.2654510 8.881811549 7.5185567870
+## Proportion of Variance   0.9981078 0.001102288 0.0007898794
+## Cumulative Proportion    0.9981078 0.999210121 1.0000000000</code></pre>
+<p>Analisei os PCs e vi que o PC1 (Comp.1) concentra quase toda informação</p>
+<pre class="r"><code>library(tidyverse)
+pca_env$scores %&gt;% 
+  as.tibble() %&gt;% 
+  ggplot(aes(Comp.1))+geom_histogram()</code></pre>
+<pre><code>## Warning: `as.tibble()` is deprecated as of tibble 2.0.0.
+## Please use `as_tibble()` instead.
+## The signature and semantics have changed, see `?as_tibble`.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_warnings()` to see where this warning was generated.</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="ordenamento_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>Então, decidi dividr rio em duas porções uma com valores negativos do PC-1 e outr com os valores positiovs desse memso PC. Daí uso os valores do vetor do PC-1 para criar minha categoria de “setores do rio”.</p>
+<pre class="r"><code>pca_env$scores %&gt;% 
+  as.tibble() %&gt;% 
+  mutate(setor=ifelse(Comp.1&lt;0,&quot;medio-baixo&quot;, &quot;alto&quot;))-&gt; env_set
+library(factoextra)
+fviz_pca_ind(pca_env,
+             geom.ind = &quot;point&quot;, # show points only (nbut not &quot;text&quot;)
+             col.ind = env_set$setor, # color by groups
+             palette = c(&quot;#00AFBB&quot;, &quot;#E7B800&quot;),
+             addEllipses = TRUE, # Concentration ellipses
+             legend.title = &quot;Groups&quot;
+             )</code></pre>
+<p><img src="ordenamento_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>Agora o NMDS</p>
+<pre class="r"><code>nmds&lt;-metaMDS(spe[-8,-c(20:30)]) # exclui algumas espécies spo para não dar de bandeja</code></pre>
+<pre><code>## Run 0 stress 0.08903991 
+## Run 1 stress 0.1338586 
+## Run 2 stress 0.0917883 
+## Run 3 stress 0.08903645 
+## ... New best solution
+## ... Procrustes: rmse 0.0005722936  max resid 0.002735189 
+## ... Similar to previous best
+## Run 4 stress 0.1283618 
+## Run 5 stress 0.1152777 
+## Run 6 stress 0.13356 
+## Run 7 stress 0.1167885 
+## Run 8 stress 0.1346745 
+## Run 9 stress 0.08903883 
+## ... Procrustes: rmse 0.0004230275  max resid 0.002021222 
+## ... Similar to previous best
+## Run 10 stress 0.1278146 
+## Run 11 stress 0.1180087 
+## Run 12 stress 0.1151909 
+## Run 13 stress 0.1266444 
+## Run 14 stress 0.08903536 
+## ... New best solution
+## ... Procrustes: rmse 0.001243055  max resid 0.005960615 
+## ... Similar to previous best
+## Run 15 stress 0.1307569 
+## Run 16 stress 0.1295153 
+## Run 17 stress 0.1164649 
+## Run 18 stress 0.1168658 
+## Run 19 stress 0.1337775 
+## Run 20 stress 0.09178727 
+## *** Solution reached</code></pre>
+<pre class="r"><code>nmds$points</code></pre>
+<pre><code>##           MDS1        MDS2
+## 1  -1.74344522  0.72675569
+## 2  -1.01632139 -0.16201264
+## 3  -0.89891069 -0.02343724
+## 4  -0.51940796 -0.06396089
+## 5   0.14999400 -0.07684248
+## 6  -0.38311083 -0.13301880
+## 7  -0.74349076 -0.17593680
+## 9  -0.18030953 -0.93328462
+## 10 -0.31217615 -0.33586449
+## 11 -0.87571611 -0.36273647
+## 12 -0.86059986 -0.10491395
+## 13 -1.08508123  0.14110163
+## 14 -0.69438891  0.18341717
+## 15 -0.37133763  0.22854632
+## 16 -0.09265737  0.38878804
+## 17  0.06120818  0.37521111
+## 18  0.25957826  0.32039815
+## 19  0.33611582  0.36615684
+## 20  0.68682683  0.36864700
+## 21  0.77709524  0.41038300
+## 22  0.90116416  0.46974479
+## 23  0.40551009 -1.71373204
+## 24  0.82067114 -1.06360809
+## 25  0.98586581 -0.72736937
+## 26  0.85300001  0.06099331
+## 27  0.91635353  0.28337579
+## 28  0.92604916  0.36546887
+## 29  0.68517013  0.59328684
+## 30  1.01235129  0.59444335
+## attr(,&quot;centre&quot;)
+## [1] TRUE
+## attr(,&quot;pc&quot;)
+## [1] TRUE
+## attr(,&quot;halfchange&quot;)
+## [1] TRUE
+## attr(,&quot;internalscaling&quot;)
+## [1] 1.065662</code></pre>
+<pre class="r"><code>nmds_dat&lt;-data.frame(nmds$points, env_set$setor[-8])
+colnames(nmds_dat) &lt;- c(&quot;MDS1&quot;,&quot;MDS2&quot;,&quot;setor&quot;)</code></pre>
+<p>Vamos ao gráfico do NMDS</p>
+<pre class="r"><code>nmds_dat %&gt;% 
+  ggplot(aes(MDS1, MDS2, color=setor))+geom_point()</code></pre>
+<p><img src="ordenamento_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+</div>
+<div id="há-alguma-correspondência" class="section level3">
+<h3>Há alguma correspondência?</h3>
+</div>
+</div>
+<div id="bom-exercício" class="section level1">
+<h1>Bom exercício!</h1>
+<iframe src="https://giphy.com/embed/sLs8Ll8Qx51xm" width="480" height="360" frameBorder="0" class="giphy-embed" allowFullScreen>
+</iframe>
+<p>
+<a href="https://giphy.com/gifs/dancing-80s-sLs8Ll8Qx51xm">via GIPHY</a>
+</p>
 </div>
 
 
@@ -454,7 +546,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>

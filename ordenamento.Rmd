@@ -1,5 +1,5 @@
 ---
-title: "mètodos de ordenação"
+title: "mètodos de ordenamento, PCA e NMDS"
 author: "Felipe Melo"
 date: "`r Sys.Date()`"
 output: 
@@ -29,6 +29,70 @@ knitr::opts_chunk$set(echo = TRUE)
 xaringanExtra::embed_xaringan(url="https://fplmelo.github.io/eco_numerica/slides/slides_aula4_ordenacao.html#1", ratio = "16:9")
 ```
 
-# Em construção
+# Exercícos para PCA e NMDS
 
-![](http://www.ct.ufpb.br/ccau/contents/noticias/site-em-construcao/em_construcao.jpg/@@images/15d9337f-6fb0-40c7-bc74-03c847b499c3.jpeg)
+#### Imagine que você precisa entender commo se agrupam as comunidades do rio que estamos estudando. Essa necessidade vem do fato de que um usina hidroelétrica está para ser construída no rio e o governo encomendou estudos de impacto ambiental que precisam demonstrar várias coisas. Você como biólogo, que está preocupado com o rio, precisa converncer o governo de construir a hidroelétrica num stor do rio que tenha o menor impacto possível. Para isso, você vai precisar anaalisar tanto a comunidade de peixes quanto as condições fisico-químicas do rio.
+
+#### Passo 1 - Faça uma PCA pra a tabela "env" (excluindo as colunas 'dfs' e 'dis'). Seu intuito em vez de dividir o rio de maneira arbitrária é encontrar divisões naturais de características ambientais, que possam ser separadas pelo seu valor médio. Examine os PCs 1 e 2 e veja, através de historgramas em quantas porçoes o rio pode ser dividido.
+
+#### Passo 2 - Faça um NMDS para os dados da comunidade biológica "spe" e use as mesmas categorias que você encontrou no passo anterior para pintas as amostras. Será que há uma coincidência?
+
+#### Passo 3 - Use o métodos de K-means para gerar agrupamentos automáticos e veja se eles coincidem com os que você gerou usando o método anterior
+
+
+
+
+**veja este exemplo simplificado** 
+```{r}
+env_simp<-env[,2:4] # escolhi apenas três variáveis
+princomp(env_simp)-> pca_env
+summary(pca_env)
+```
+
+Analisei os PCs e vi que o PC1 (Comp.1) concentra quase toda informação
+
+```{r}
+library(tidyverse)
+pca_env$scores %>% 
+  as.tibble() %>% 
+  ggplot(aes(Comp.1))+geom_histogram()
+```
+
+Então, decidi dividr  rio em duas porções uma com valores negativos do PC-1 e outr com os valores positiovs desse memso PC. Daí uso os valores do vetor do PC-1 para criar minha categoria de "setores do rio".
+
+```{r}
+pca_env$scores %>% 
+  as.tibble() %>% 
+  mutate(setor=ifelse(Comp.1<0,"medio-baixo", "alto"))-> env_set
+library(factoextra)
+fviz_pca_ind(pca_env,
+             geom.ind = "point", # show points only (nbut not "text")
+             col.ind = env_set$setor, # color by groups
+             palette = c("#00AFBB", "#E7B800"),
+             addEllipses = TRUE, # Concentration ellipses
+             legend.title = "Groups"
+             )
+```
+
+Agora o NMDS
+
+```{r}
+nmds<-metaMDS(spe[-8,-c(20:30)]) # exclui algumas espécies spo para não dar de bandeja
+nmds$points
+nmds_dat<-data.frame(nmds$points, env_set$setor[-8])
+colnames(nmds_dat) <- c("MDS1","MDS2","setor")
+
+```
+
+Vamos ao gráfico do NMDS
+
+```{r}
+nmds_dat %>% 
+  ggplot(aes(MDS1, MDS2, color=setor))+geom_point()
+```
+
+### Há alguma correspondência? 
+
+# Bom exercício!
+<iframe src="https://giphy.com/embed/sLs8Ll8Qx51xm" width="480" height="360" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/dancing-80s-sLs8Ll8Qx51xm">via GIPHY</a></p>
+

@@ -8,7 +8,7 @@ encoding: "UTF-8"
 output: 
   xaringan::moon_reader:
     libs_dir: libs
-    css: ["robot","tamu-fonts"]
+    css: ["rladies","tamu-fonts"]
     nature:
       highlightStyle: github
       highlightLines: true
